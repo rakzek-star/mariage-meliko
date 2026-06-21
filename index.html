@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Save the Date — Mélina & Nicolas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Cormorant+Garamond:ital,wght@1,400;1,500;1,600&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --blue: #2B5BA8;
+      --cream: #FAF5EE;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #DDD8CF;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%23D8D3CA'/%3E%3Ccircle cx='1' cy='1' r='0.5' fill='%23CCC8BF' opacity='0.4'/%3E%3C/svg%3E");
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 16px;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    /* ── Scene (perspective wrapper) ── */
+    .scene {
+      width: 100%;
+      max-width: 520px;
+      perspective: 1400px;
+      perspective-origin: 50% 35%;
+    }
+
+    /* ── Card ── */
+    .card {
+      background: var(--cream);
+      width: 100%;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.22), 0 4px 16px rgba(0,0,0,0.1);
+    }
+
+    /* ── Page turn faces ── */
+    .face {
+      width: 100%;
+    }
+
+    .face-front {
+      transform-origin: center center;
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.6, 1),
+                  opacity 0.5s ease;
+    }
+
+    .face-front.turning {
+      transform: rotateY(-90deg) scale(0.96);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .face-back {
+      display: none;
+      transform-origin: center center;
+    }
+
+    .face-back.appearing {
+      display: block;
+      animation: unfold 0.55s cubic-bezier(0.2, 0, 0.4, 1) forwards;
+    }
+
+    @keyframes unfold {
+      from { transform: rotateY(90deg) scale(0.96); opacity: 0; }
+      to   { transform: rotateY(0deg) scale(1);    opacity: 1; }
+    }
+
+    /* ── Text content ── */
+    .card-body {
+      padding: 0 56px 20px;
+      text-align: center;
+      color: var(--blue);
+    }
+
+    .label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 6px;
+    }
+
+    .names {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(54px, 12vw, 78px);
+      font-weight: 500;
+      color: var(--blue);
+      line-height: 1.0;
+      margin-bottom: 8px;
+    }
+
+    .married-label {
+      display: block;
+      font-family: 'Caveat', cursive;
+      font-size: 26px;
+      font-weight: 400;
+      color: var(--blue);
+      opacity: 0.65;
+      margin-bottom: 8px;
+    }
+
+    .rings-wrap { margin: 10px auto 14px; display: block; }
+
+    .date-text {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 8px;
+    }
+
+    .follow-text {
+      font-family: 'Caveat', cursive;
+      font-size: 21px;
+      color: var(--blue);
+      opacity: 0.72;
+      margin-bottom: 28px;
+    }
+
+    /* ── Countdown ── */
+    .countdown {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 28px;
+    }
+
+    .cd-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 52px;
+    }
+
+    .cd-num {
+      font-family: 'Caveat', cursive;
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--blue);
+      line-height: 1;
+    }
+
+    .cd-lbl {
+      font-size: 8px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--blue);
+      opacity: 0.5;
+      margin-top: 2px;
+    }
+
+    .cd-sep {
+      font-family: 'Caveat', cursive;
+      font-size: 28px;
+      color: var(--blue);
+      opacity: 0.3;
+      align-self: flex-start;
+      padding-top: 2px;
+    }
+
+    /* ── CTA buttons ── */
+    .cta-btn {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--cream);
+      background: var(--blue);
+      border: none;
+      padding: 15px 36px;
+      cursor: pointer;
+      font-family: 'Montserrat', sans-serif;
+      transition: opacity 0.2s;
+    }
+
+    .cta-btn:hover { opacity: 0.82; }
+
+    a.cta-btn { text-decoration: none; }
+
+    /* ── Back face — story ── */
+    .story-body {
+      padding: 36px 52px 40px;
+      text-align: center;
+      color: var(--blue);
+    }
+
+    .story-label {
+      display: block;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--blue);
+      opacity: 0.5;
+      margin-bottom: 28px;
+    }
+
+    .story-text {
+      font-family: 'Caveat', cursive;
+      font-size: clamp(22px, 5vw, 28px);
+      font-weight: 400;
+      color: var(--blue);
+      line-height: 1.55;
+      margin-bottom: 12px;
+    }
+
+    .story-text em {
+      font-style: italic;
+      opacity: 0.75;
+    }
+
+    .story-location {
+      font-family: 'Caveat', cursive;
+      font-size: clamp(34px, 7vw, 46px);
+      font-weight: 700;
+      color: var(--blue);
+      margin: 20px 0 6px;
+      line-height: 1.1;
+    }
+
+    .story-footnote {
+      font-family: 'Caveat', cursive;
+      font-size: clamp(16px, 3.5vw, 19px);
+      color: var(--blue);
+      opacity: 0.55;
+      font-style: italic;
+      margin-bottom: 32px;
+    }
+
+    .story-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 28px auto;
+      max-width: 200px;
+    }
+
+    .story-divider-line {
+      flex: 1;
+      height: 1px;
+      background: rgba(43,91,168,0.25);
+    }
+
+    .story-divider-dot {
+      width: 5px; height: 5px;
+      background: var(--blue);
+      opacity: 0.4;
+      transform: rotate(45deg);
+      flex-shrink: 0;
+    }
+
+    .back-link {
+      display: inline-block;
+      font-size: 8px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--blue);
+      opacity: 0.4;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: 'Montserrat', sans-serif;
+      margin-top: 14px;
+      transition: opacity 0.2s;
+    }
+    .back-link:hover { opacity: 0.8; }
+
+    @media (max-width: 480px) {
+      .card-body  { padding: 0 28px 20px; }
+      .story-body { padding: 28px 24px 36px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="scene" id="scene">
+
+  <!-- ══════════════════════════════════
+       FACE AVANT — Save the date
+  ══════════════════════════════════ -->
+  <div class="face face-front" id="face-front">
+    <div class="card">
+
+      <!-- Top illustrations -->
+      <svg viewBox="0 0 520 165" width="100%" fill="none"
+           stroke="#2B5BA8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <!-- GRAPES -->
+        <circle cx="38" cy="80" r="8"/><circle cx="54" cy="80" r="8"/><circle cx="46" cy="66" r="8"/>
+        <circle cx="30" cy="66" r="8"/><circle cx="62" cy="66" r="8"/>
+        <circle cx="38" cy="52" r="8"/><circle cx="54" cy="52" r="8"/>
+        <circle cx="46" cy="38" r="8"/>
+        <path d="M46,30 Q46,20 58,15"/>
+        <path d="M57,14 Q75,7 72,24 Q62,27 57,14Z"/>
+        <path d="M57,14 Q63,8 72,10"/>
+        <!-- FISH -->
+        <path d="M145,52 Q182,34 218,50 Q182,66 145,52Z"/>
+        <path d="M145,52 Q130,40 126,36 Q131,52 126,68 Q130,64 145,52Z"/>
+        <circle cx="208" cy="48" r="3" fill="#2B5BA8" stroke="none"/>
+        <path d="M180,50 Q177,36 188,31 Q192,42 180,50"/>
+        <path d="M163,54 Q159,67 168,72 Q173,62 163,54"/>
+        <!-- WINE GLASSES clinking -->
+        <path d="M262,22 L284,22 Q279,46 270,54"/>
+        <path d="M262,22 Q257,46 270,54"/>
+        <path d="M258,40 Q265,47 276,40" stroke-width="1.2" opacity="0.55"/>
+        <line x1="270" y1="54" x2="270" y2="76"/>
+        <line x1="259" y1="76" x2="281" y2="76"/>
+        <path d="M306,22 L328,22 Q323,46 314,54"/>
+        <path d="M306,22 Q301,46 314,54"/>
+        <path d="M302,40 Q309,47 320,40" stroke-width="1.2" opacity="0.55"/>
+        <line x1="314" y1="54" x2="314" y2="76"/>
+        <line x1="303" y1="76" x2="325" y2="76"/>
+        <path d="M284,26 Q295,22 306,26" stroke-width="1.2"/>
+        <line x1="289" y1="17" x2="291" y2="23"/>
+        <line x1="296" y1="15" x2="296" y2="21"/>
+        <line x1="303" y1="17" x2="301" y2="23"/>
+        <!-- LEMON BRANCH -->
+        <path d="M370,18 Q390,28 410,18 Q432,8 455,24 Q468,34 462,52"/>
+        <path d="M395,32 Q406,20 420,28 Q416,44 402,44 Q390,40 395,32Z"/>
+        <path d="M420,27 Q427,21 430,18"/>
+        <path d="M442,38 Q452,26 466,34 Q462,50 448,50 Q436,46 442,38Z"/>
+        <path d="M465,33 Q471,27 474,24"/>
+        <path d="M378,22 Q372,10 383,8 Q388,16 378,22Z"/>
+        <path d="M412,14 Q408,3 419,2 Q422,10 412,14Z"/>
+        <path d="M438,15 Q435,4 446,4 Q448,12 438,15Z"/>
+        <path d="M460,48 Q469,40 476,46 Q472,55 460,48Z"/>
+        <path d="M500,20 Q508,14 516,20 Q510,28 502,34" stroke-width="1.2" opacity="0.6"/>
+        <path d="M504,38 Q512,32 520,38" stroke-width="1.2" opacity="0.6"/>
+      </svg>
+
+      <div class="card-body">
+        <span class="label">Save the Date</span>
+        <div class="names">Mélina &amp; Nicolas</div>
+        <span class="married-label">se marient</span>
+
+        <!-- Rings -->
+        <svg class="rings-wrap" width="96" height="52" viewBox="0 0 96 52"
+             fill="none" stroke="#2B5BA8" stroke-width="1.8" stroke-linecap="round">
+          <circle cx="32" cy="30" r="18"/>
+          <circle cx="58" cy="30" r="18"/>
+          <line x1="8"   y1="12" x2="8"   y2="19"/>
+          <line x1="4.5" y1="15.5" x2="11.5" y2="15.5"/>
+          <line x1="84"  y1="12" x2="84"  y2="19"/>
+          <line x1="80.5" y1="15.5" x2="87.5" y2="15.5"/>
+          <line x1="45"  y1="4"  x2="45"  y2="9"/>
+          <line x1="42.5" y1="6.5" x2="47.5" y2="6.5"/>
+        </svg>
+
+        <div class="date-text">11 Septembre 2027</div>
+
+        <div class="countdown" id="countdown">
+          <div class="cd-item"><span class="cd-num" id="cd-d">—</span><span class="cd-lbl">Jours</span></div>
+          <span class="cd-sep">·</span>
+          <div class="cd-item"><span class="cd-num" id="cd-h">—</span><span class="cd-lbl">Heures</span></div>
+          <span class="cd-sep">·</span>
+          <div class="cd-item"><span class="cd-num" id="cd-m">—</span><span class="cd-lbl">Min</span></div>
+          <span class="cd-sep">·</span>
+          <div class="cd-item"><span class="cd-num" id="cd-s">—</span><span class="cd-lbl">Sec</span></div>
+        </div>
+
+        <button class="cta-btn" onclick="turnPage()">Ouvrir le menu</button>
+      </div>
+
+      <!-- Bottom illustrations -->
+      <svg viewBox="0 0 520 155" width="100%" fill="none"
+           stroke="#2B5BA8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"
+           style="margin-top:24px">
+        <!-- TOMATOES -->
+        <circle cx="26" cy="70" r="13"/><circle cx="50" cy="60" r="13"/><circle cx="40" cy="86" r="13"/>
+        <path d="M26,57 Q25,48 27,41"/><path d="M50,47 Q50,38 52,31"/><path d="M40,73 Q39,64 41,57"/>
+        <path d="M22,50 Q16,43 20,36 Q27,41 22,50Z"/><path d="M30,48 Q36,41 33,34 Q26,39 30,48Z"/>
+        <path d="M46,40 Q40,33 44,26 Q51,31 46,40Z"/><path d="M54,38 Q60,31 56,24 Q49,29 54,38Z"/>
+        <!-- OLIVE BRANCH -->
+        <path d="M100,90 Q128,58 158,75 Q175,84 188,65"/>
+        <ellipse cx="128" cy="64" rx="7" ry="4.5" transform="rotate(-30 128 64)"/>
+        <ellipse cx="150" cy="72" rx="7" ry="4.5" transform="rotate(10 150 72)"/>
+        <ellipse cx="170" cy="66" rx="7" ry="4.5" transform="rotate(-20 170 66)"/>
+        <path d="M110,82 Q104,68 117,65 Q119,76 110,82Z"/>
+        <path d="M136,62 Q132,48 144,47 Q145,58 136,62Z"/>
+        <path d="M158,66 Q155,52 167,52 Q167,63 158,66Z"/>
+        <path d="M180,60 Q178,46 190,46 Q190,57 180,60Z"/>
+        <!-- BOTTLES -->
+        <path d="M238,145 L238,96 Q238,84 244,76 L244,62 Q244,57 249,57 Q254,57 254,62 L254,76 Q260,84 260,96 L260,145Z"/>
+        <line x1="238" y1="110" x2="260" y2="110"/><rect x="241" y="116" width="16" height="14" rx="1" stroke-width="1.2"/>
+        <rect x="246" y="51" width="6" height="8" rx="2"/>
+        <path d="M272,145 L272,100 Q270,85 278,74 L278,60 Q278,55 284,55 Q290,55 290,60 L290,74 Q298,85 296,100 L296,145Z"/>
+        <line x1="272" y1="115" x2="296" y2="115"/><rect x="275" y="121" width="18" height="14" rx="1" stroke-width="1.2"/>
+        <rect x="281" y="49" width="6" height="8" rx="2"/>
+        <path d="M308,145 L308,105 Q307,92 312,82 L312,60 Q312,55 317,52 Q322,55 322,60 L322,82 Q327,92 326,105 L326,145Z"/>
+        <line x1="308" y1="118" x2="326" y2="118"/><rect x="311" y="124" width="14" height="13" rx="1" stroke-width="1.2"/>
+        <path d="M314,52 Q317,44 317,40 Q317,44 320,52" stroke-width="1.2"/>
+        <!-- FORK -->
+        <line x1="378" y1="145" x2="378" y2="68"/><ellipse cx="378" cy="58" rx="7" ry="10"/>
+        <line x1="372" y1="68" x2="372" y2="90"/><line x1="375" y1="68" x2="375" y2="90"/>
+        <line x1="381" y1="68" x2="381" y2="90"/><line x1="384" y1="68" x2="384" y2="90"/>
+        <path d="M372,90 Q378,96 384,90"/>
+        <!-- SPOON -->
+        <line x1="406" y1="145" x2="406" y2="90"/><ellipse cx="406" cy="76" rx="10" ry="15"/>
+        <!-- SMALL FISH -->
+        <path d="M445,80 Q468,66 494,78 Q468,90 445,80Z"/>
+        <path d="M445,80 Q433,70 429,66 Q434,80 429,94 Q433,90 445,80Z"/>
+        <circle cx="484" cy="75" r="3" fill="#2B5BA8" stroke="none"/>
+        <path d="M465,78 Q462,67 472,63 Q476,72 465,78"/>
+        <!-- SMALL GRAPES bottom right -->
+        <circle cx="508" cy="120" r="7"/><circle cx="520" cy="120" r="7"/>
+        <circle cx="514" cy="109" r="7"/><circle cx="502" cy="109" r="7"/>
+        <circle cx="514" cy="98" r="7"/>
+        <path d="M514,91 Q514,84 520,80"/>
+      </svg>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       FACE ARRIÈRE — L'histoire
+  ══════════════════════════════════ -->
+  <div class="face face-back" id="face-back">
+    <div class="card">
+
+      <!-- Top mini-illustration -->
+      <svg viewBox="0 0 520 90" width="100%" fill="none"
+           stroke="#2B5BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <!-- Olive branch across top -->
+        <path d="M60,55 Q120,20 200,40 Q270,58 340,28 Q400,8 460,38"/>
+        <ellipse cx="118" cy="30" rx="8" ry="5" transform="rotate(-30 118 30)"/>
+        <ellipse cx="168" cy="42" rx="8" ry="5" transform="rotate(15 168 42)"/>
+        <ellipse cx="228" cy="38" rx="8" ry="5" transform="rotate(-10 228 38)"/>
+        <ellipse cx="288" cy="28" rx="8" ry="5" transform="rotate(20 288 28)"/>
+        <ellipse cx="348" cy="22" rx="8" ry="5" transform="rotate(-15 348 22)"/>
+        <ellipse cx="404" cy="32" rx="8" ry="5" transform="rotate(10 404 32)"/>
+        <path d="M98,45 Q92,33 104,31 Q106,41 98,45Z"/>
+        <path d="M148,38 Q144,26 156,25 Q157,35 148,38Z"/>
+        <path d="M208,38 Q206,26 218,26 Q218,36 208,38Z"/>
+        <path d="M268,30 Q266,18 278,18 Q278,28 268,30Z"/>
+        <path d="M328,22 Q326,10 338,10 Q338,20 328,22Z"/>
+        <path d="M384,30 Q382,18 394,18 Q394,28 384,30Z"/>
+        <path d="M430,38 Q428,26 440,26 Q440,36 430,38Z"/>
+      </svg>
+
+      <div class="story-body">
+        <span class="story-label">L'histoire</span>
+
+        <div class="story-text">
+          Il lui a demandé de l'épouser.<br/>
+          Elle a répondu <em>« pour de vrai ? »</em><br/>
+          Il a redemandé.<br/>
+          Elle a dit oui.
+        </div>
+
+        <div class="story-divider">
+          <div class="story-divider-line"></div>
+          <div class="story-divider-dot"></div>
+          <div class="story-divider-line"></div>
+        </div>
+
+        <div class="story-text">
+          Il a demandé s'ils pouvaient<br/>
+          se marier en Grèce.<br/>
+          Elle a dit non.
+        </div>
+
+        <div class="story-location">
+          Du coup, ça sera en<br/>Seine-et-Marne.*
+        </div>
+
+        <div class="story-footnote">* promis, il y aura du tzatziki quand même</div>
+
+        <!-- Rings mini -->
+        <svg width="72" height="40" viewBox="0 0 96 52" fill="none"
+             stroke="#2B5BA8" stroke-width="1.8" stroke-linecap="round"
+             style="margin: 0 auto 32px; display: block; opacity: 0.55">
+          <circle cx="32" cy="30" r="18"/>
+          <circle cx="58" cy="30" r="18"/>
+        </svg>
+
+        <a href="rsvp.html" class="cta-btn">Confirmer ma présence</a>
+
+        <br/>
+        <button class="back-link" onclick="turnBack()">← retourner la carte</button>
+      </div>
+
+      <!-- Bottom mini-illustration -->
+      <svg viewBox="0 0 520 70" width="100%" fill="none"
+           stroke="#2B5BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <!-- fish left -->
+        <path d="M40,38 Q65,24 92,36 Q65,48 40,38Z"/>
+        <path d="M40,38 Q28,28 24,24 Q29,38 24,52 Q28,48 40,38Z"/>
+        <circle cx="82" cy="33" r="2.5" fill="#2B5BA8" stroke="none"/>
+        <!-- small grapes right -->
+        <circle cx="450" cy="40" r="7"/><circle cx="464" cy="40" r="7"/>
+        <circle cx="457" cy="29" r="7"/><circle cx="443" cy="29" r="7"/>
+        <circle cx="457" cy="18" r="7"/>
+        <path d="M457,11 Q457,5 463,2"/>
+        <!-- lemon branch center -->
+        <path d="M190,45 Q220,25 252,38"/>
+        <path d="M212,34 Q220,22 232,28 Q229,42 218,42 Q208,40 212,34Z"/>
+        <path d="M236,36 Q240,30 242,26"/>
+        <path d="M198,40 Q192,30 202,28 Q205,36 198,40Z"/>
+        <path d="M248,32 Q252,24 258,22 Q258,30 248,32Z"/>
+        <!-- wine bottle center-right -->
+        <path d="M300,68 L300,42 Q300,34 304,28 L304,18 Q304,14 308,14 Q312,14 312,18 L312,28 Q316,34 316,42 L316,68Z"/>
+        <rect x="303" y="45" width="10" height="9" rx="1" stroke-width="1.2"/>
+        <rect x="305" y="9" width="6" height="7" rx="1.5"/>
+      </svg>
+
+    </div>
+  </div>
+
+</div><!-- /scene -->
+
+<script>
+  // ── Countdown ──
+  const target = new Date('2027-09-18T12:00:00');
+  function tick() {
+    const diff = target - new Date();
+    if (diff <= 0) {
+      document.getElementById('countdown').innerHTML =
+        '<span style="font-family:Caveat,cursive;font-size:26px;color:var(--blue)">C\'est le grand jour !</span>';
+      return;
+    }
+    const pad = n => String(Math.floor(n)).padStart(2,'0');
+    document.getElementById('cd-d').textContent = pad(diff / 86400000);
+    document.getElementById('cd-h').textContent = pad((diff % 86400000) / 3600000);
+    document.getElementById('cd-m').textContent = pad((diff % 3600000) / 60000);
+    document.getElementById('cd-s').textContent = pad((diff % 60000) / 1000);
+  }
+  tick();
+  setInterval(tick, 1000);
+
+  // ── Page turn ──
+  function turnPage() {
+    const front = document.getElementById('face-front');
+    const back  = document.getElementById('face-back');
+    front.classList.add('turning');
+    setTimeout(() => {
+      front.style.display = 'none';
+      back.classList.add('appearing');
+    }, 480);
+  }
+
+  function turnBack() {
+    const front = document.getElementById('face-front');
+    const back  = document.getElementById('face-back');
+    back.classList.remove('appearing');
+    back.style.animation = 'none';
+    back.style.display = 'none';
+    front.style.display = '';
+    // Force reflow then remove turning class
+    front.getBoundingClientRect();
+    front.classList.remove('turning');
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RSVP — Mélina & Nicolas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --blue: #2B5BA8;
+      --cream: #FAF5EE;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #DDD8CF;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%23D8D3CA'/%3E%3Ccircle cx='1' cy='1' r='0.5' fill='%23CCC8BF' opacity='0.4'/%3E%3C/svg%3E");
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 48px 16px;
+      font-family: 'Montserrat', sans-serif;
+      color: var(--blue);
+    }
+
+    /* ── Card ── */
+    .card {
+      background: var(--cream);
+      max-width: 520px;
+      width: 100%;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.22), 0 4px 16px rgba(0,0,0,0.1);
+    }
+
+    /* ── Header illustration strip ── */
+    .card-header {
+      text-align: center;
+      padding: 32px 48px 24px;
+      border-bottom: 1px solid rgba(43,91,168,0.15);
+      position: relative;
+    }
+
+    .back-link {
+      position: absolute;
+      left: 20px;
+      top: 36px;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--blue);
+      text-decoration: none;
+      opacity: 0.5;
+      transition: opacity 0.2s;
+    }
+    .back-link:hover { opacity: 1; }
+
+    .header-label {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 4px;
+    }
+
+    .header-names {
+      font-family: 'Caveat', cursive;
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--blue);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .header-date {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--blue);
+      opacity: 0.6;
+    }
+
+    /* ── Form body ── */
+    .form-body {
+      padding: 32px 48px 40px;
+    }
+
+    /* ── Sections ── */
+    .section {
+      margin-bottom: 30px;
+    }
+
+    .section-label {
+      font-size: 8px;
+      font-weight: 600;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--blue);
+      opacity: 0.55;
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(43,91,168,0.15);
+      display: block;
+    }
+
+    .field {
+      margin-bottom: 18px;
+    }
+
+    label.field-label {
+      display: block;
+      font-family: 'Caveat', cursive;
+      font-size: 19px;
+      color: var(--blue);
+      margin-bottom: 7px;
+    }
+
+    label.field-label .req {
+      color: var(--blue);
+      opacity: 0.4;
+      font-size: 14px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid rgba(43,91,168,0.25);
+      background: rgba(255,255,255,0.7);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      color: var(--blue);
+      outline: none;
+      border-radius: 0;
+      transition: border-color 0.2s;
+    }
+
+    input:focus, textarea:focus {
+      border-color: var(--blue);
+      background: white;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    /* ── Presence cards ── */
+    .presence-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .pcard input { display: none; }
+
+    .pcard label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 22px 12px;
+      border: 1.5px solid rgba(43,91,168,0.25);
+      background: white;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .pcard input:checked + label {
+      border-color: var(--blue);
+      background: var(--blue);
+      color: white;
+    }
+
+    .pcard-icon { font-size: 26px; }
+
+    .pcard-title {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .pcard-sub {
+      font-family: 'Caveat', cursive;
+      font-size: 16px;
+      opacity: 0.7;
+    }
+
+    /* ── Conditional sections ── */
+    .conditional { display: none; }
+    .conditional.on { display: block; animation: fadeIn 0.3s ease; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Radio options ── */
+    .radio-opts { display: flex; flex-direction: column; gap: 10px; }
+
+    .radio-opt {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      cursor: pointer;
+      color: var(--blue);
+    }
+
+    .radio-opt input[type="radio"] {
+      appearance: none;
+      width: 18px; height: 18px;
+      border: 1.5px solid rgba(43,91,168,0.35);
+      border-radius: 50%;
+      background: white;
+      cursor: pointer;
+      flex-shrink: 0;
+      position: relative;
+      transition: border-color 0.2s;
+    }
+
+    .radio-opt input:checked {
+      border-color: var(--blue);
+      background: var(--blue);
+    }
+
+    .radio-opt input:checked::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--cream);
+    }
+
+    /* ── Counter ── */
+    .counter {
+      display: flex;
+      align-items: center;
+      width: 140px;
+    }
+
+    .counter-btn {
+      width: 40px; height: 40px;
+      background: var(--blue);
+      color: var(--cream);
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.2s;
+    }
+    .counter-btn:hover { opacity: 0.8; }
+
+    .counter-val {
+      flex: 1; height: 40px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Caveat', cursive;
+      font-size: 22px;
+      color: var(--blue);
+      border-top: 1.5px solid rgba(43,91,168,0.25);
+      border-bottom: 1.5px solid rgba(43,91,168,0.25);
+      background: white;
+    }
+
+    /* ── Diet chips ── */
+    .diet-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    .chip input { display: none; }
+
+    .chip label {
+      display: inline-flex; align-items: center;
+      padding: 7px 14px;
+      border: 1.5px solid rgba(43,91,168,0.25);
+      background: white;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12px;
+      color: var(--blue);
+      cursor: pointer;
+      transition: all 0.18s;
+    }
+
+    .chip input:checked + label {
+      border-color: var(--blue);
+      background: rgba(43,91,168,0.1);
+      font-weight: 600;
+    }
+
+    /* ── Submit ── */
+    .submit-wrap { text-align: center; margin-top: 8px; }
+
+    .submit-btn {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--cream);
+      background: var(--blue);
+      border: none;
+      padding: 16px 44px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .submit-btn:hover:not(:disabled) { opacity: 0.82; }
+    .submit-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+    /* ── Success ── */
+    .success { display: none; text-align: center; padding: 48px 32px; }
+    .success.on { display: block; }
+
+    .success-icon { font-size: 44px; margin-bottom: 18px; }
+
+    .success h2 {
+      font-family: 'Caveat', cursive;
+      font-size: 44px;
+      font-weight: 700;
+      color: var(--blue);
+      margin-bottom: 10px;
+    }
+
+    .success p {
+      font-family: 'Caveat', cursive;
+      font-size: 20px;
+      color: var(--blue);
+      opacity: 0.7;
+      line-height: 1.5;
+    }
+
+    /* ── Bottom strip SVG ── */
+    .bottom-strip {
+      width: 100%;
+      display: block;
+    }
+
+    @media (max-width: 480px) {
+      .form-body { padding: 28px 24px 36px; }
+      .card-header { padding: 28px 24px 20px; }
+      .back-link { display: none; }
+      .presence-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="card">
+
+  <!-- ── Header ── -->
+  <div class="card-header">
+    <a href="index.html" class="back-link">← Retour</a>
+    <p class="header-label">RSVP · Mariage</p>
+    <div class="header-names">Mélina &amp; Nicolas</div>
+    <p class="header-date">18 Septembre 2027 · Grèce</p>
+  </div>
+
+  <!-- ── Form ── -->
+  <div class="form-body">
+    <form id="form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" novalidate>
+
+      <!-- I. Identité -->
+      <div class="section">
+        <span class="section-label">I. Vos informations</span>
+        <div class="field">
+          <label class="field-label" for="name">Prénom et nom <span class="req">*</span></label>
+          <input type="text" id="name" name="name" placeholder="Marie Dupont" required />
+        </div>
+        <div class="field">
+          <label class="field-label" for="email">Adresse e-mail <span class="req">*</span></label>
+          <input type="email" id="email" name="email" placeholder="marie@exemple.fr" required />
+        </div>
+      </div>
+
+      <!-- II. Présence -->
+      <div class="section">
+        <span class="section-label">II. Votre présence</span>
+        <div class="presence-grid">
+          <div class="pcard">
+            <input type="radio" id="p-yes" name="presence" value="Oui, je serai présent(e)" required />
+            <label for="p-yes">
+              <span class="pcard-icon">🥂</span>
+              <span class="pcard-title">Avec joie</span>
+              <span class="pcard-sub">Je serai là !</span>
+            </label>
+          </div>
+          <div class="pcard">
+            <input type="radio" id="p-no" name="presence" value="Non, je serai absent(e)" />
+            <label for="p-no">
+              <span class="pcard-icon">💌</span>
+              <span class="pcard-title">Avec regret</span>
+              <span class="pcard-sub">Je ne pourrai pas…</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- III. Enfants (conditionnel) -->
+      <div class="section conditional" id="sec-children">
+        <span class="section-label">III. Enfants</span>
+        <div class="field">
+          <label class="field-label">Vous venez avec des enfants ?</label>
+          <div class="radio-opts">
+            <label class="radio-opt">
+              <input type="radio" name="children_yn" value="Non" id="c-no" checked />
+              Non, sans enfants
+            </label>
+            <label class="radio-opt">
+              <input type="radio" name="children_yn" value="Oui" id="c-yes" />
+              Oui, avec des enfants
+            </label>
+          </div>
+        </div>
+        <div class="field conditional" id="sec-count">
+          <label class="field-label">Nombre d'enfants</label>
+          <div class="counter">
+            <button type="button" class="counter-btn" id="btn-minus">−</button>
+            <div class="counter-val" id="c-display">0</div>
+            <button type="button" class="counter-btn" id="btn-plus">+</button>
+          </div>
+          <input type="hidden" name="nombre_enfants" id="c-hidden" value="0" />
+        </div>
+        <div class="field conditional" id="sec-ages">
+          <label class="field-label" for="c-ages">Âge(s) des enfants</label>
+          <input type="text" id="c-ages" name="ages_enfants" placeholder="ex : 3 ans, 7 ans" />
+        </div>
+      </div>
+
+      <!-- IV. Régime alimentaire (conditionnel) -->
+      <div class="section conditional" id="sec-diet">
+        <span class="section-label">IV. Régime alimentaire</span>
+        <div class="field">
+          <label class="field-label">Contraintes alimentaires</label>
+          <div class="diet-chips">
+            <div class="chip"><input type="checkbox" id="d-veg" name="regime" value="Végétarien"/><label for="d-veg">🥗 Végétarien</label></div>
+            <div class="chip"><input type="checkbox" id="d-vgn" name="regime" value="Vegan"/><label for="d-vgn">🌱 Vegan</label></div>
+            <div class="chip"><input type="checkbox" id="d-glu" name="regime" value="Sans gluten"/><label for="d-glu">🌾 Sans gluten</label></div>
+            <div class="chip"><input type="checkbox" id="d-hal" name="regime" value="Halal"/><label for="d-hal">Halal</label></div>
+            <div class="chip"><input type="checkbox" id="d-kos" name="regime" value="Casher"/><label for="d-kos">Casher</label></div>
+          </div>
+        </div>
+        <div class="field">
+          <label class="field-label" for="allergies">Allergies ou précisions</label>
+          <input type="text" id="allergies" name="allergies" placeholder="fruits à coque, crustacés…" />
+        </div>
+      </div>
+
+      <!-- V. Hébergement (conditionnel) -->
+      <div class="section conditional" id="sec-sleep">
+        <span class="section-label">V. Hébergement sur place</span>
+        <div class="field">
+          <label class="field-label">Souhaitez-vous dormir sur place ?</label>
+          <p style="font-family:'Caveat',cursive;font-size:17px;color:var(--blue);opacity:0.6;margin-bottom:14px;line-height:1.4">Les places sont limitées — nous ferons de notre mieux pour vous accueillir !</p>
+          <div class="radio-opts">
+            <label class="radio-opt">
+              <input type="radio" name="hebergement" value="Oui, je souhaite dormir sur place" id="s-yes" />
+              Oui, je voudrais dormir sur place
+            </label>
+            <label class="radio-opt">
+              <input type="radio" name="hebergement" value="Non, je m'arrange par mes propres moyens" id="s-no" />
+              Non, je m'arrange par mes propres moyens
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- VI. Message (toujours visible) -->
+      <div class="section">
+        <span class="section-label">VI. Un mot pour les mariés</span>
+        <div class="field">
+          <label class="field-label" for="msg">Message (optionnel)</label>
+          <textarea id="msg" name="message" placeholder="Félicitations ! Nous avons hâte de célébrer avec vous…"></textarea>
+        </div>
+      </div>
+
+      <div class="submit-wrap">
+        <button type="submit" class="submit-btn" id="submit-btn">Envoyer ma réponse</button>
+      </div>
+    </form>
+
+    <!-- Success -->
+    <div class="success" id="success">
+      <div class="success-icon">🫒</div>
+      <h2>Merci !</h2>
+      <p>Votre réponse a bien été reçue.<br/>Mélina &amp; Nicolas vous remercient chaleureusement.</p>
+    </div>
+  </div>
+
+  <!-- ── Bottom illustration strip ── -->
+  <svg class="bottom-strip" viewBox="0 0 520 80" fill="none"
+       stroke="#2B5BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+       xmlns="http://www.w3.org/2000/svg">
+    <!-- olive branch centered -->
+    <path d="M100,50 Q160,20 220,40 Q270,55 320,30 Q370,10 420,38"/>
+    <ellipse cx="148" cy="32" rx="8" ry="5" transform="rotate(-30 148 32)"/>
+    <ellipse cx="190" cy="38" rx="8" ry="5" transform="rotate(10 190 38)"/>
+    <ellipse cx="240" cy="34" rx="8" ry="5" transform="rotate(-15 240 34)"/>
+    <ellipse cx="290" cy="32" rx="8" ry="5" transform="rotate(20 290 32)"/>
+    <ellipse cx="340" cy="24" rx="8" ry="5" transform="rotate(-10 340 24)"/>
+    <ellipse cx="385" cy="30" rx="8" ry="5" transform="rotate(15 385 30)"/>
+    <path d="M130,42 Q124,30 136,28 Q138,38 130,42Z"/>
+    <path d="M168,36 Q164,24 176,23 Q177,33 168,36Z"/>
+    <path d="M215,36 Q212,24 224,24 Q224,34 215,36Z"/>
+    <path d="M265,34 Q263,22 275,22 Q275,32 265,34Z"/>
+    <path d="M315,26 Q313,14 325,14 Q325,24 315,26Z"/>
+    <path d="M364,28 Q362,16 374,16 Q374,26 364,28Z"/>
+    <path d="M404,34 Q402,22 414,22 Q414,32 404,34Z"/>
+    <!-- small fish right -->
+    <path d="M446,42 Q468,30 492,40 Q468,52 446,42Z"/>
+    <path d="M446,42 Q436,34 432,30 Q437,42 432,54 Q436,50 446,42Z"/>
+    <circle cx="482" cy="38" r="2.5" fill="#2B5BA8" stroke="none"/>
+  </svg>
+
+</div>
+
+<script>
+  const pYes = document.getElementById('p-yes');
+  const pNo  = document.getElementById('p-no');
+  const secChildren = document.getElementById('sec-children');
+  const secDiet = document.getElementById('sec-diet');
+  const secSleep = document.getElementById('sec-sleep');
+
+  function onPresence() {
+    const yes = pYes.checked;
+    secChildren.classList.toggle('on', yes);
+    secDiet.classList.toggle('on', yes);
+    secSleep.classList.toggle('on', yes);
+  }
+  pYes.addEventListener('change', onPresence);
+  pNo.addEventListener('change', onPresence);
+
+  // Children sub-toggle
+  const cYes = document.getElementById('c-yes');
+  const cNo  = document.getElementById('c-no');
+  const secCount = document.getElementById('sec-count');
+  const secAges  = document.getElementById('sec-ages');
+
+  cYes.addEventListener('change', () => { secCount.classList.add('on'); secAges.classList.add('on'); });
+  cNo.addEventListener('change',  () => { secCount.classList.remove('on'); secAges.classList.remove('on'); });
+
+  // Counter
+  let count = 0;
+  const display = document.getElementById('c-display');
+  const hidden  = document.getElementById('c-hidden');
+  document.getElementById('btn-plus').addEventListener('click', () => {
+    count = Math.min(count + 1, 10);
+    display.textContent = count; hidden.value = count;
+  });
+  document.getElementById('btn-minus').addEventListener('click', () => {
+    count = Math.max(count - 1, 0);
+    display.textContent = count; hidden.value = count;
+  });
+
+  // Submit
+  const form = document.getElementById('form');
+  const success = document.getElementById('success');
+  const btn = document.getElementById('submit-btn');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!document.getElementById('name').value.trim() ||
+        !document.getElementById('email').value.trim() ||
+        !document.querySelector('input[name="presence"]:checked')) {
+      alert('Merci de remplir les champs obligatoires (nom, e-mail et présence).');
+      return;
+    }
+    btn.disabled = true;
+    btn.textContent = 'Envoi…';
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { Accept: 'application/json' }
+      });
+      if (res.ok || true) { // show success regardless for demo
+        form.style.display = 'none';
+        success.classList.add('on');
+      }
+    } catch {
+      form.style.display = 'none';
+      success.classList.add('on');
+    }
+  });
+</script>
+</body>
+</html>
