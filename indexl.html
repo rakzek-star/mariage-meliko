@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Save the Date — Mélina & Nicolas</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>" />
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Dancing+Script:wght@500;700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --sage: #7A8C6E;
+      --sage-light: #B5C4A8;
+      --parchment: #FDFAF5;
+      --terracotta: #C4845A;
+      --brown: #3D2F22;
+      --brown-soft: #6B5744;
+      --green-wash: #A8B89A;
+      --green-dark: #5A7050;
+    }
+    body {
+      background: #DDD8CE;
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 32px 16px;
+      font-family: 'Jost', sans-serif;
+    }
+
+    .scene { width: min(340px, 88vw); aspect-ratio: 2/3; perspective: 1400px; cursor: pointer; }
+    .card { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.9s cubic-bezier(0.4,0.2,0.2,1); }
+    .card.flipped { transform: rotateY(180deg); }
+    .face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; overflow: hidden; background: var(--parchment); box-shadow: 0 4px 16px rgba(0,0,0,0.10), 0 24px 60px rgba(0,0,0,0.13); }
+    .face-back { transform: rotateY(180deg); }
+
+    /* ── RECTO ── */
+    .front-inner {
+      display: flex; flex-direction: column; align-items: center;
+      height: 100%; position: relative;
+    }
+
+    /* Zone texte haut */
+    .front-top {
+      padding: 30px 28px 0;
+      text-align: center;
+      position: relative; z-index: 2;
+      width: 100%;
+    }
+
+    .stl {
+      font-size: 8px; letter-spacing: 7px; text-transform: uppercase;
+      color: var(--brown-soft); opacity: 0.45; font-weight: 300;
+      margin-bottom: 12px; display: block;
+    }
+
+    .names {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(32px, 9.5vw, 44px);
+      font-weight: 500;
+      color: var(--terracotta);
+      line-height: 1.05;
+    }
+
+    .names-amp {
+      display: block;
+      font-family: 'Jost', sans-serif;
+      font-size: clamp(9px, 2.5vw, 11px);
+      font-weight: 300;
+      letter-spacing: 5px;
+      color: var(--brown-soft);
+      opacity: 0.45;
+      margin: 4px 0;
+    }
+
+    .date-row {
+      display: flex; align-items: center; gap: 10px;
+      margin: 12px 0 0;
+      width: 80%;
+    }
+    .date-h { flex: 1; height: 1px; background: var(--terracotta); opacity: 0.2; }
+    .date-txt {
+      font-size: 7.5px; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--brown-soft); opacity: 0.5; white-space: nowrap;
+    }
+
+    .loc-txt {
+      font-size: 7.5px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--brown-soft); opacity: 0.35; margin-top: 4px;
+    }
+
+    .tap-hint {
+      font-size: 7px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--sage); opacity: 0.4; margin-top: 8px;
+    }
+
+    /* Illustration occupe le bas */
+    .illus-wrap {
+      flex: 1;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+    .illus-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+
+    /* ── VERSO ── */
+    .back-inner {
+      display: flex; flex-direction: column; justify-content: space-between;
+      height: 100%; padding: 34px 28px 26px; text-align: center;
+    }
+
+    .back-label {
+      font-size: 7px; letter-spacing: 5px; text-transform: uppercase;
+      color: var(--sage); opacity: 0.55; font-weight: 300;
+      margin-bottom: 14px; display: block;
+    }
+    .story {
+      font-family: 'Libre Baskerville', serif;
+      font-size: clamp(12.5px, 3.5vw, 14px);
+      font-style: italic; color: var(--brown-soft);
+      opacity: 0.7; line-height: 1.9;
+    }
+    .story-sep { width: 24px; height: 1px; background: var(--sage-light); margin: 12px auto; opacity: 0.6; }
+    .location {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(18px, 5vw, 22px);
+      color: var(--terracotta); opacity: 0.85; line-height: 1.4;
+    }
+    .cta {
+      display: inline-block; font-size: 7.5px; font-weight: 500;
+      letter-spacing: 4px; text-transform: uppercase;
+      color: var(--parchment); background: var(--sage);
+      padding: 13px 26px; text-decoration: none;
+      font-family: 'Jost', sans-serif; border: none; cursor: pointer;
+      transition: background 0.2s;
+    }
+    .cta:hover { background: var(--brown); }
+    .back-flip {
+      display: block; margin-top: 10px;
+      font-size: 7px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--brown-soft); opacity: 0.2;
+      background: none; border: none;
+      font-family: 'Jost', sans-serif; cursor: pointer;
+    }
+    .tzatziki {
+      font-family: 'Libre Baskerville', serif; font-style: italic;
+      font-size: 10.5px; color: var(--brown-soft); opacity: 0.2; margin-top: 6px;
+    }
+    @media (prefers-reduced-motion: reduce) { .card { transition: none; } }
+  
+.names{
+display:flex!important;
+flex-direction:column;
+align-items:center;
+line-height:.92!important;
+font-family:'Libre Baskerville',serif!important;
+font-style:italic;
+font-size:58px!important;
+font-weight:400!important;
+color:#b67f56!important;
+}
+
+.names-amp{
+font-family:'Libre Baskerville',serif!important;
+font-style:italic;
+font-size:18px!important;
+letter-spacing:0!important;
+color:#b67f56!important;
+opacity:.8!important;
+}
+
+.date-txt{
+font-size:10px!important;
+letter-spacing:3px!important;
+}
+
+.loc-txt{
+margin-top:14px!important;
+font-size:11px!important;
+letter-spacing:2px!important;
+line-height:1.6!important;
+}
+
+
+</style>
+</head>
+<body>
+
+<div class="scene" onclick="flip()">
+  <div class="card" id="card">
+
+    <!-- RECTO -->
+    <div class="face face-front">
+      <div class="front-inner">
+
+        <div class="front-top">
+          
+          <div class="names">
+            Mélina
+            <span class="names-amp">&amp;</span>
+            Nicolas
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center">
+            <div class="date-row">
+              <div class="date-h"></div>
+              <div class="date-txt">18 · 09 · 2027</div>
+              <div class="date-h"></div>
+            </div>
+            <div class="loc-txt">Seine-et-Marne</div>
+            
+          </div>
+        </div>
+
+        <!-- Illustration aquarelle domaine vue aérienne -->
+        <div class="illus-wrap">
+          <img src="villa-aquarelle.webp" alt="Domaine" />
+        </div>
+
+      </div>
+    </div>
+
+    <!-- VERSO -->
+    <div class="face face-back">
+      <div class="back-inner">
+        <div>
+          <span class="back-label">Notre histoire</span>
+          <div class="story">
+            Il lui a demandé de l'épouser.<br/>
+            Elle a répondu <em>« pour de vrai ? »</em><br/>
+            Il a redemandé. Elle a dit oui.
+          </div>
+          <div class="story-sep"></div>
+          <div class="story">
+            Il a demandé s'ils pouvaient<br/>
+            se marier en Grèce.<br/>
+            Elle a dit non.
+          </div>
+          <div class="story-sep"></div>
+          <div class="location">Du coup, ça sera en<br/>Seine-et-Marne.*</div>
+        </div>
+        <div>
+          <a href="rsvp.html" class="cta">Confirmer ma présence</a>
+          <button class="back-flip" onclick="event.stopPropagation();document.getElementById('card').classList.remove('flipped')">← retourner</button>
+          <div class="tzatziki">* promis, il y aura du tzatziki quand même</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>function flip(){document.getElementById('card').classList.toggle('flipped');}</script>
+</body>
+</html>
