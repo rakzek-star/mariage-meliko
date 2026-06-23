@@ -244,8 +244,8 @@ line-height:1.6!important;
           <div class="location">Du coup, ça sera en<br/>Seine-et-Marne.*</div>
         </div>
         <div>
-          <a href="rsvp.html" class="cta">Confirmer ma présence</a>
-          <button class="back-flip" onclick="event.stopPropagation();document.getElementById('card').classList.remove('flipped')">← retourner</button>
+          <a href="rsvp.html" class="cta" onclick="event.stopPropagation()">Confirmer ma présence</a>
+          <button class="back-flip" onclick="event.stopPropagation();unflip()">← retourner</button>
           <div class="tzatziki">* promis, il y aura du tzatziki quand même</div>
         </div>
       </div>
@@ -254,6 +254,11 @@ line-height:1.6!important;
   </div>
 </div>
 
-<script>function flip(){document.getElementById('card').classList.toggle('flipped');}</script>
+<script>
+  const card = document.getElementById('card');
+  function flip()   { card.classList.add('flipped'); }
+  function unflip() { card.classList.remove('flipped'); }
+  document.getElementById('scene').addEventListener('click', flip);
+</script>
 </body>
 </html>
