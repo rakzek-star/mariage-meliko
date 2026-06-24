@@ -6,444 +6,347 @@
   <title>RSVP — Mélina & Nicolas</title>
   <meta property="og:title" content="Mélina & Nicolas — 18 Septembre 2027" />
   <meta property="og:description" content="Confirmez votre présence à notre mariage !" />
-  <meta property="og:image" content="https://rakzek-star.github.io/mariage-meliko/og-image.png" />
-  <meta property="og:url" content="https://rakzek-star.github.io/mariage-meliko/rsvp.html" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🫒</text></svg>" />
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet" />
+  <meta property="og:image" content="https://mariage-meliko.netlify.app/og-image.png" />
+  <meta property="og:url" content="https://mariage-meliko.netlify.app/rsvp.html" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>" />
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Dancing+Script:wght@500;700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
-    :root {
-      --blue: #2B5BA8;
-      --cream: #FAF5EE;
-    }
-
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    :root {
+      --parchment: #FDFAF5;
+      --terracotta: #C4845A;
+      --brown: #3D2F22;
+      --brown-soft: #564434;
+      --sage: #7A8C6E;
+      --sage-light: #B5C4A8;
+    }
+
     body {
-      background: #DDD8CF;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%23D8D3CA'/%3E%3Ccircle cx='1' cy='1' r='0.5' fill='%23CCC8BF' opacity='0.4'/%3E%3C/svg%3E");
+      background: #ECE5DA;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23p)' opacity='0.04'/%3E%3C/svg%3E");
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 48px 16px;
-      font-family: 'Montserrat', sans-serif;
-      color: var(--blue);
+      padding: 40px 16px;
+      font-family: 'Jost', sans-serif;
+      color: var(--brown);
     }
 
     /* ── Card ── */
     .card {
-      background: var(--cream);
-      max-width: 520px;
+      background: var(--parchment);
+      max-width: 500px;
       width: 100%;
-      box-shadow: 0 32px 80px rgba(0,0,0,0.22), 0 4px 16px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.10), 0 24px 60px rgba(0,0,0,0.13);
     }
 
     /* ── Header ── */
     .card-header {
       text-align: center;
-      padding: 32px 48px 24px;
-      border-bottom: 1px solid rgba(43,91,168,0.15);
+      padding: 32px 40px 24px;
+      border-bottom: 1px solid rgba(196,132,90,0.2);
       position: relative;
     }
 
     .back-link {
-      position: absolute;
-      left: 20px;
-      top: 36px;
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--blue);
-      text-decoration: none;
-      opacity: 0.5;
-      transition: opacity 0.2s;
+      display: block;
+      font-size: 8px; font-weight: 400;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: var(--brown-soft); text-decoration: none;
+      opacity: 0.7; transition: opacity 0.2s;
+      margin-bottom: 4px;
     }
-    .back-link:hover { opacity: 1; }
+    .back-link:hover { opacity: 0.8; }
 
     .header-label {
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 5px;
+      font-size: 8px; letter-spacing: 6px;
       text-transform: uppercase;
-      color: var(--blue);
-      margin-bottom: 4px;
+      color: var(--brown); opacity: 0.75;
+      margin-bottom: 8px; display: block;
     }
 
     .header-names {
-      font-family: 'Caveat', cursive;
-      font-size: 48px;
-      font-weight: 700;
-      color: var(--blue);
-      line-height: 1;
-      margin-bottom: 4px;
+      font-family: 'Libre Baskerville', serif;
+      font-style: italic; font-weight: 400;
+      font-size: clamp(32px, 9vw, 42px);
+      color: var(--terracotta);
+      line-height: .95;
+      letter-spacing: 0.02em;
+    }
+
+    .header-amp {
+      display: block;
+      font-size: clamp(14px, 4vw, 18px);
+      opacity: 0.7; margin: 2px 0;
     }
 
     .header-date {
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 4px;
+      font-size: 8px; letter-spacing: 4px;
       text-transform: uppercase;
-      color: var(--blue);
-      opacity: 0.6;
+      color: var(--brown); opacity: 0.8;
+      margin-top: 10px; display: block;
     }
 
     .deadline-banner {
-      margin-top: 12px;
-      font-family: 'Caveat', cursive;
-      font-size: 16px;
-      color: var(--blue);
-      opacity: 0.7;
+      margin-top: 10px;
+      font-family: 'Libre Baskerville', serif;
+      font-style: italic;
+      font-size: 13px;
+      color: var(--brown-soft); opacity: 0.75;
     }
 
     /* ── Form body ── */
-    .form-body {
-      padding: 32px 48px 40px;
-    }
+    .form-body { padding: 28px 40px 36px; }
 
     @media (max-width: 480px) {
-      .form-body { padding: 24px 20px 32px; }
-      .card-header { padding: 28px 20px 20px; }
+      .form-body { padding: 20px 18px 28px; }
+      .card-header { padding: 28px 18px 20px; }
     }
 
     /* ── Sections ── */
-    .section {
-      margin-bottom: 30px;
-    }
+    .section { margin-bottom: 36px; }
 
     .section-label {
-      font-size: 8px;
-      font-weight: 600;
-      letter-spacing: 5px;
-      text-transform: uppercase;
-      color: var(--blue);
-      opacity: 0.55;
-      margin-bottom: 14px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid rgba(43,91,168,0.15);
+      font-size: 9px; letter-spacing: 4px;
+      text-transform: uppercase; font-weight: 600;
+      color: var(--brown); opacity: 0.85;
+      margin-bottom: 14px; padding-bottom: 8px;
+      border-bottom: 1.5px solid rgba(107,87,68,0.3);
       display: block;
     }
 
-    .field {
-      margin-bottom: 18px;
-    }
+    .field { margin-bottom: 20px; }
 
     label.field-label {
       display: block;
-      font-family: 'Caveat', cursive;
-      font-size: 19px;
-      color: var(--blue);
-      margin-bottom: 7px;
+      font-family: 'Libre Baskerville', serif;
+      font-style: italic; font-size: 16px;
+      color: var(--brown-soft); margin-bottom: 7px;
     }
 
-    label.field-label .req {
-      color: var(--blue);
-      opacity: 0.4;
-      font-size: 14px;
-    }
+    label.field-label .req { opacity: 0.4; font-size: 13px; }
 
     input[type="text"],
     input[type="email"],
     input[type="number"],
     textarea {
       width: 100%;
-      padding: 11px 14px;
-      border: 1.5px solid rgba(43,91,168,0.25);
-      background: rgba(255,255,255,0.7);
-      font-family: 'Montserrat', sans-serif;
-      font-size: 13px;
-      color: var(--blue);
-      outline: none;
-      border-radius: 0;
+      padding: 10px 13px;
+      border: 1px solid rgba(107,87,68,0.12);
+      background: rgba(255,255,255,0.6);
+      font-family: 'Jost', sans-serif;
+      font-size: 13px; font-weight: 300;
+      color: var(--brown);
+      outline: none; border-radius: 0;
       transition: border-color 0.2s;
     }
-
     input:focus, textarea:focus {
-      border-color: var(--blue);
+      border-color: var(--terracotta);
       background: white;
     }
-
-    textarea {
-      resize: vertical;
-      min-height: 100px;
-    }
+    textarea { resize: vertical; min-height: 90px; }
 
     /* ── Presence cards ── */
     .presence-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
     }
-
     .pcard input { display: none; }
-
     .pcard label {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 28px 12px;
-      border: 1.5px solid rgba(43,91,168,0.25);
-      background: white;
-      cursor: pointer;
-      transition: all 0.2s;
-      font-family: 'Montserrat', sans-serif;
-      min-height: 120px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 8px; padding: 24px 12px;
+      border: 1px solid rgba(107,87,68,0.12);
+      background: rgba(255,255,255,0.5);
+      cursor: pointer; transition: all 0.2s;
+      min-height: 110px;
     }
-
     .pcard input:checked + label {
-      border-color: var(--blue);
-      background: var(--blue);
-      color: white;
+      border-color: var(--terracotta);
+      background: var(--terracotta);
+      color: var(--parchment);
     }
-
-    .pcard-icon { font-size: 30px; }
-
+    .pcard-icon { font-size: 26px; }
     .pcard-title {
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 3px;
-      text-transform: uppercase;
+      font-size: 8px; font-weight: 500;
+      letter-spacing: 3px; text-transform: uppercase;
     }
-
     .pcard-sub {
-      font-family: 'Caveat', cursive;
-      font-size: 17px;
-      opacity: 0.7;
+      font-family: 'Libre Baskerville', serif;
+      font-style: italic; font-size: 14px; opacity: 0.7;
     }
 
-    /* ── Conditional sections ── */
+    /* ── Conditional ── */
     .conditional { display: none; }
     .conditional.on { display: block; animation: fadeIn 0.3s ease; }
-
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-6px); }
+      from { opacity: 0; transform: translateY(-5px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* ── Radio options ── */
+    /* ── Radio opts ── */
     .radio-opts { display: flex; flex-direction: column; gap: 10px; }
-
     .radio-opt {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 13px;
-      cursor: pointer;
-      color: var(--blue);
+      display: flex; align-items: center; gap: 10px;
+      font-size: 13px; font-weight: 300; cursor: pointer;
+      color: var(--brown-soft);
     }
-
     .radio-opt input[type="radio"] {
-      appearance: none;
-      width: 18px; height: 18px;
-      border: 1.5px solid rgba(43,91,168,0.35);
-      border-radius: 50%;
-      background: white;
-      cursor: pointer;
-      flex-shrink: 0;
-      position: relative;
-      transition: border-color 0.2s;
+      appearance: none; width: 16px; height: 16px;
+      border: 1px solid rgba(107,87,68,0.3);
+      border-radius: 50%; background: white;
+      cursor: pointer; flex-shrink: 0;
+      transition: all 0.2s;
     }
-
     .radio-opt input:checked {
-      border-color: var(--blue);
-      background: var(--blue);
+      border-color: var(--terracotta);
+      background: var(--terracotta);
     }
 
     /* ── Diet chips ── */
     .diet-chips { display: flex; flex-wrap: wrap; gap: 8px; }
-
     .chip input { display: none; }
-
     .chip label {
-      display: inline-block;
-      padding: 8px 16px;
-      border: 1.5px solid rgba(43,91,168,0.25);
-      background: white;
-      font-size: 12px;
-      cursor: pointer;
-      transition: all 0.2s;
-      font-family: 'Montserrat', sans-serif;
-      color: var(--blue);
+      display: inline-block; padding: 7px 16px;
+      border: 1px solid rgba(107,87,68,0.12);
+      background: rgba(255,255,255,0.5);
+      font-size: 12px; font-weight: 300; cursor: pointer;
+      transition: all 0.2s; color: var(--brown-soft);
     }
-
     .chip input:checked + label {
-      background: var(--blue);
-      border-color: var(--blue);
-      color: white;
+      background: var(--sage); border-color: var(--sage);
+      color: var(--parchment);
     }
 
     /* ── Counter ── */
-    .counter {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
+    .counter { display: flex; align-items: center; gap: 16px; }
     .counter-btn {
-      width: 36px; height: 36px;
-      border: 1.5px solid rgba(43,91,168,0.35);
-      background: white;
-      font-size: 20px;
-      color: var(--blue);
-      cursor: pointer;
-      font-family: 'Montserrat', sans-serif;
-      transition: all 0.2s;
+      width: 34px; height: 34px;
+      border: 1px solid rgba(107,87,68,0.25);
+      background: rgba(255,255,255,0.5);
+      font-size: 18px; color: var(--brown-soft);
+      cursor: pointer; transition: all 0.2s;
+      font-family: 'Jost', sans-serif;
     }
-
-    .counter-btn:hover { background: var(--blue); color: white; border-color: var(--blue); }
-
+    .counter-btn:hover { background: var(--terracotta); color: white; border-color: var(--terracotta); }
     .counter-val {
-      font-family: 'Caveat', cursive;
-      font-size: 28px;
-      color: var(--blue);
-      min-width: 24px;
-      text-align: center;
+      font-family: 'Libre Baskerville', serif;
+      font-style: italic; font-size: 26px;
+      color: var(--brown); min-width: 20px; text-align: center;
     }
 
-    /* ── Children name fields ── */
+    /* ── Child rows ── */
     .children-fields { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
-
-    .child-row {
-      display: grid;
-      grid-template-columns: 1fr 80px;
-      gap: 8px;
-      align-items: center;
-    }
-
+    .child-row { display: grid; grid-template-columns: 1fr 70px; gap: 8px; }
     .child-row-label {
-      font-family: 'Caveat', cursive;
-      font-size: 15px;
-      color: var(--blue);
-      opacity: 0.6;
-      margin-bottom: 4px;
+      font-family: 'Libre Baskerville', serif;
+      font-style: italic; font-size: 13px;
+      color: var(--brown-soft); opacity: 0.5; margin-bottom: 4px;
     }
 
-    /* ── Submit ── */
-    .submit-wrap { text-align: center; margin-top: 10px; }
-
-    .submit-btn {
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--cream);
-      background: var(--blue);
-      border: none;
-      padding: 18px 48px;
-      cursor: pointer;
-      font-family: 'Montserrat', sans-serif;
-      transition: opacity 0.2s;
-      width: 100%;
-    }
-
-    .submit-btn:hover { opacity: 0.82; }
-    .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
-    /* ── Récap ── */
+    /* ── Recap ── */
     .recap-box {
       display: none;
-      background: rgba(43,91,168,0.06);
-      border: 1.5px solid rgba(43,91,168,0.2);
-      padding: 20px 24px;
-      margin-bottom: 24px;
+      background: rgba(122,140,110,0.07);
+      border: 1px solid rgba(122,140,110,0.2);
+      padding: 16px 20px; margin-bottom: 20px;
     }
-
     .recap-box.on { display: block; }
-
     .recap-title {
-      font-size: 8px;
-      font-weight: 600;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--blue);
-      opacity: 0.6;
-      margin-bottom: 12px;
+      font-size: 7px; letter-spacing: 4px;
+      text-transform: uppercase; color: var(--sage);
+      opacity: 0.6; margin-bottom: 10px;
     }
-
     .recap-line {
-      font-family: 'Caveat', cursive;
-      font-size: 17px;
-      color: var(--blue);
-      line-height: 1.6;
+      font-family: 'Libre Baskerville', serif;
+      font-style: italic; font-size: 14px;
+      color: var(--brown-soft); line-height: 1.7;
     }
 
     /* ── Error ── */
     .error-banner {
       display: none;
-      background: #fff0f0;
-      border: 1.5px solid rgba(180,40,40,0.3);
-      padding: 14px 18px;
-      margin-bottom: 16px;
-      font-family: 'Caveat', cursive;
-      font-size: 17px;
-      color: #9b2020;
-      animation: fadeIn 0.3s ease;
+      background: #fff5f0;
+      border: 1px solid rgba(196,132,90,0.3);
+      padding: 12px 16px; margin-bottom: 14px;
+      font-family: 'Libre Baskerville', serif;
+      font-style: italic; font-size: 14px;
+      color: var(--terracotta); animation: fadeIn 0.3s ease;
     }
-
     .error-banner.on { display: block; }
 
+    /* ── Submit ── */
+    .submit-wrap { text-align: center; margin-top: 8px; }
+    .submit-btn {
+      font-size: 8px; font-weight: 500;
+      letter-spacing: 5px; text-transform: uppercase;
+      color: var(--parchment); background: var(--brown);
+      border: none; padding: 14px 40px;
+      cursor: pointer; font-family: 'Jost', sans-serif;
+      transition: background 0.2s; width: auto; min-width: 60%;
+    }
+    .submit-btn:hover { background: var(--terracotta); }
+    .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
     /* ── Success ── */
-    .success {
-      display: none;
-      text-align: center;
-      padding: 64px 48px;
-    }
-
+    .success { display: none; text-align: center; padding: 56px 40px; }
+    .success-sent { font-size: 8px; letter-spacing: 5px; text-transform: uppercase; color: var(--sage); opacity: 0.7; margin-bottom: 16px; }
     .success.on { display: block; animation: fadeIn 0.5s ease; }
-
-    .success-icon { font-size: 48px; margin-bottom: 20px; }
-
+    .success-icon { font-size: 42px; margin-bottom: 18px; }
     .success h2 {
-      font-family: 'Caveat', cursive;
-      font-size: 40px;
-      color: var(--blue);
-      margin-bottom: 12px;
+      font-family: 'Libre Baskerville', serif;
+      font-style: italic; font-size: 34px;
+      color: var(--terracotta); margin-bottom: 10px;
     }
-
     .success p {
-      font-size: 13px;
-      color: var(--blue);
-      opacity: 0.7;
-      line-height: 1.7;
+      font-size: 13px; font-weight: 300;
+      color: var(--brown-soft); opacity: 0.7; line-height: 1.7;
     }
 
-    /* ── Bottom strip ── */
-    .bottom-strip { display: block; margin-top: 0; }
+    /* ── Note vég ── */
+    .note-veg {
+      font-family: 'Libre Baskerville', serif;
+      font-style: italic; font-size: 13px;
+      color: var(--brown-soft); opacity: 0.5;
+      margin-bottom: 10px; line-height: 1.5;
+    }
   </style>
 </head>
 <body>
 
 <div class="card">
-
-  <!-- Header -->
   <div class="card-header">
     <a href="index.html" class="back-link">← Save the date</a>
-    <div class="header-label">Confirmation de présence</div>
-    <div class="header-names">Mélina &amp; Nicolas</div>
-    <div class="header-date">18 Septembre 2027 · Seine-et-Marne</div>
-    <div class="deadline-banner">📅 Merci de répondre avant le 1er janvier 2027</div>
+    <div style="height:18px"></div>
+    <span class="header-label">Confirmation de présence</span>
+    <div class="header-names">
+      Mélina
+      <span class="header-amp">&amp;</span>
+      Nicolas
+    </div>
+    <span class="header-date">18 · Septembre · 2027</span>
+    <div class="deadline-banner">Merci de répondre avant le 1er janvier 2027</div>
   </div>
 
-  <form class="form-body" id="form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+  <form class="form-body" id="form">
 
     <!-- I. Présence -->
     <div class="section">
       <span class="section-label">I. Votre présence</span>
       <div class="presence-grid">
         <div class="pcard">
-          <input type="radio" id="p-yes" name="presence" value="Oui, je serai présent(e)" required />
+          <input type="radio" id="p-yes" name="presence" value="Oui, je serai présent.e" required />
           <label for="p-yes">
-            <span class="pcard-icon">🥂</span>
+            <span class="pcard-icon"></span>
             <span class="pcard-title">Avec joie</span>
             <span class="pcard-sub">Je serai là !</span>
           </label>
         </div>
         <div class="pcard">
-          <input type="radio" id="p-no" name="presence" value="Non, je serai absent(e)" />
+          <input type="radio" id="p-no" name="presence" value="Non, je serai absent.e" />
           <label for="p-no">
-            <span class="pcard-icon">💌</span>
+            <span class="pcard-icon"></span>
             <span class="pcard-title">Avec regret</span>
             <span class="pcard-sub">Je ne pourrai pas…</span>
           </label>
@@ -464,42 +367,30 @@
       </div>
     </div>
 
-    <!-- III. Accompagnant (conditionnel) -->
+    <!-- III. Accompagnant -->
     <div class="section conditional" id="sec-partner">
-      <span class="section-label">III. Accompagnant(e)</span>
+      <span class="section-label">III. Accompagnant.e</span>
       <div class="field">
-        <label class="field-label">Venez-vous accompagné(e) ?</label>
+        <label class="field-label">Venez-vous accompagné.e ?</label>
         <div class="radio-opts">
-          <label class="radio-opt">
-            <input type="radio" name="accompagne" value="Non" id="a-no" checked />
-            Non, je viens seul(e)
-          </label>
-          <label class="radio-opt">
-            <input type="radio" name="accompagne" value="Oui" id="a-yes" />
-            Oui, je viens avec quelqu'un
-          </label>
+          <label class="radio-opt"><input type="radio" name="accompagne" value="Non" id="a-no" checked /> Non, je viens seul.e</label>
+          <label class="radio-opt"><input type="radio" name="accompagne" value="Oui" id="a-yes" /> Oui, je viens avec quelqu'un</label>
         </div>
       </div>
       <div class="field conditional" id="sec-partner-name">
-        <label class="field-label" for="partner-name">Prénom et nom de votre accompagnant(e) <span class="req">*</span></label>
+        <label class="field-label" for="partner-name">Prénom et nom de votre accompagnant.e <span class="req">*</span></label>
         <input type="text" id="partner-name" name="accompagnant" placeholder="Marie Dupont" />
       </div>
     </div>
 
-    <!-- IV. Enfants (conditionnel) -->
+    <!-- IV. Enfants -->
     <div class="section conditional" id="sec-children">
       <span class="section-label">IV. Enfants</span>
       <div class="field">
         <label class="field-label">Vous venez avec des enfants ?</label>
         <div class="radio-opts">
-          <label class="radio-opt">
-            <input type="radio" name="children_yn" value="Non" id="c-no" checked />
-            Non, sans enfants
-          </label>
-          <label class="radio-opt">
-            <input type="radio" name="children_yn" value="Oui" id="c-yes" />
-            Oui, avec des enfants
-          </label>
+          <label class="radio-opt"><input type="radio" name="children_yn" value="Non" id="c-no" checked /> Non, sans enfants</label>
+          <label class="radio-opt"><input type="radio" name="children_yn" value="Oui" id="c-yes" /> Oui, avec des enfants</label>
         </div>
       </div>
       <div class="field conditional" id="sec-count">
@@ -514,14 +405,14 @@
       </div>
     </div>
 
-    <!-- V. Régime alimentaire (conditionnel) -->
+    <!-- V. Régime -->
     <div class="section conditional" id="sec-diet">
       <span class="section-label">V. Régime alimentaire</span>
       <div class="field">
         <label class="field-label">Contraintes alimentaires</label>
-        <p style="font-family:'Caveat',cursive;font-size:17px;color:var(--blue);opacity:0.6;margin-bottom:12px;line-height:1.4">Le menu proposé inclut une option végétarienne 🥗</p>
+        <p class="note-veg">Le menu proposé inclut une option végétarienne </p>
         <div class="diet-chips">
-          <div class="chip"><input type="checkbox" id="d-veg" name="regime" value="Végétarien"/><label for="d-veg">🥗 Végétarien</label></div>
+          <div class="chip"><input type="checkbox" id="d-veg" name="regime" value="Végétarien"/><label for="d-veg"> Végétarien</label></div>
         </div>
       </div>
       <div class="field">
@@ -530,70 +421,49 @@
       </div>
     </div>
 
-    <!-- VI. Hébergement (conditionnel) -->
+    <!-- VI. Hébergement -->
     <div class="section conditional" id="sec-sleep">
       <span class="section-label">VI. Hébergement sur place</span>
       <div class="field">
         <label class="field-label">Souhaitez-vous dormir sur place ?</label>
-        <p style="font-family:'Caveat',cursive;font-size:17px;color:var(--blue);opacity:0.6;margin-bottom:14px;line-height:1.4">Les places sont limitées — nous ferons de notre mieux pour vous accueillir !<br/>Participation : <strong>50 € par personne par nuit</strong>.</p>
+        <p class="note-veg">Les places sont limitées — nous ferons de notre mieux !<br/>Participation : <strong>50 € par personne par nuit</strong>.</p>
         <div class="radio-opts">
-          <label class="radio-opt">
-            <input type="radio" name="hebergement" value="2 nuits (vendredi et samedi)" id="s-2n" />
-            Oui, 2 nuits — vendredi 17 et samedi 18 septembre
-          </label>
-          <label class="radio-opt">
-            <input type="radio" name="hebergement" value="1 nuit (samedi seulement)" id="s-1n" />
-            Oui, 1 nuit — samedi 18 septembre seulement
-          </label>
-          <label class="radio-opt">
-            <input type="radio" name="hebergement" value="Non, je m'arrange par mes propres moyens" id="s-no" />
-            Non, je m'arrange par mes propres moyens
-          </label>
+          <label class="radio-opt"><input type="radio" name="hebergement" value="2 nuits (vendredi et samedi)" id="s-2n" /> Oui, 2 nuits — vendredi 17 et samedi 18 septembre</label>
+          <label class="radio-opt"><input type="radio" name="hebergement" value="1 nuit (samedi seulement)" id="s-1n" /> Oui, 1 nuit — samedi 18 septembre seulement</label>
+          <label class="radio-opt"><input type="radio" name="hebergement" value="Non" id="s-no" /> Non, je m'arrange par mes propres moyens</label>
         </div>
       </div>
     </div>
 
-    <!-- VII. Voiturier (conditionnel) -->
+    <!-- VII. Voiturier -->
     <div class="section conditional" id="sec-voiturier">
       <span class="section-label">VII. Service de voiturier</span>
       <div class="field">
-        <label class="field-label">Seriez-vous intéressé(e) par un service de voiturier pour vous ramener à votre logement ?</label>
+        <label class="field-label">Seriez-vous intéressé.e par un service de voiturier pour rentrer ?</label>
         <div class="radio-opts">
-          <label class="radio-opt">
-            <input type="radio" name="voiturier" value="Non" id="v-no" checked />
-            Non merci
-          </label>
-          <label class="radio-opt">
-            <input type="radio" name="voiturier" value="Oui" id="v-yes" />
-            Oui, je suis intéressé(e)
-          </label>
+          <label class="radio-opt"><input type="radio" name="voiturier" value="Non" id="v-no" checked /> Non merci</label>
+          <label class="radio-opt"><input type="radio" name="voiturier" value="Oui" id="v-yes" /> Oui, je suis intéressé.e</label>
         </div>
       </div>
       <div class="field conditional" id="sec-voiturier-prix">
-        <label class="field-label" for="voiturier-prix">Combien seriez-vous prêt(e) à régler pour ce service ?</label>
+        <label class="field-label" for="voiturier-prix">Combien seriez-vous prêt.e à régler ?</label>
         <input type="text" id="voiturier-prix" name="voiturier_prix" placeholder="ex : 20 €" />
       </div>
     </div>
 
-    <!-- VIII. Brunch (conditionnel) -->
+    <!-- VIII. Brunch -->
     <div class="section conditional" id="sec-brunch">
       <span class="section-label">VIII. Brunch du lendemain</span>
       <div class="field">
-        <label class="field-label">Nous organisons un brunch le dimanche 19 septembre 🍋<br/>Serez-vous des nôtres ?</label>
+        <label class="field-label">Nous organisons un brunch le dimanche 19 septembre <br/>Serez-vous des nôtres ?</label>
         <div class="radio-opts">
-          <label class="radio-opt">
-            <input type="radio" name="brunch" value="Oui, je serai au brunch" id="b-yes" />
-            Oui, avec plaisir !
-          </label>
-          <label class="radio-opt">
-            <input type="radio" name="brunch" value="Non, je ne serai pas au brunch" id="b-no" checked />
-            Non, je ne pourrai pas rester
-          </label>
+          <label class="radio-opt"><input type="radio" name="brunch" value="Oui, je serai au brunch" id="b-yes" /> Oui, avec plaisir !</label>
+          <label class="radio-opt"><input type="radio" name="brunch" value="Non" id="b-no" checked /> Non, je ne pourrai pas rester</label>
         </div>
       </div>
     </div>
 
-    <!-- IX. Message (toujours visible) -->
+    <!-- IX. Message -->
     <div class="section">
       <span class="section-label">IX. Un mot pour les mariés</span>
       <div class="field">
@@ -604,7 +474,7 @@
 
     <!-- Récap -->
     <div class="recap-box" id="recap-box">
-      <div class="recap-title">Récapitulatif de votre réponse</div>
+      <div class="recap-title">Récapitulatif</div>
       <div class="recap-line" id="recap-content"></div>
     </div>
 
@@ -616,39 +486,21 @@
     </div>
   </form>
 
-  <!-- Success -->
   <div class="success" id="success">
-    <div class="success-icon">🫒</div>
-    <h2>Merci !</h2>
-    <p>Votre réponse a bien été reçue.<br/>Mélina &amp; Nicolas vous remercient chaleureusement.</p>
+    <div id="success-present" style="display:none">
+      <p class="success-sent">Réponse envoyée</p>
+      <h2>Merci à vous !</h2>
+      <p>On a hâte de vous voir en <span style="text-decoration:line-through;opacity:0.45">Grèce</span> Seine-et-Marne.<br/>La suite arrive bientôt.</p>
+    </div>
+    <div id="success-absent" style="display:none">
+      <p class="success-sent">Réponse envoyée</p>
+      <h2>Tristesse !</h2>
+      <p>En espérant te voir bientôt</p>
+    </div>
   </div>
 </div>
 
-<!-- Bottom illustration strip -->
-<svg class="bottom-strip" viewBox="0 0 520 80" fill="none"
-     stroke="#2B5BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-     xmlns="http://www.w3.org/2000/svg">
-  <path d="M100,50 Q160,20 220,40 Q270,55 320,30 Q370,10 420,38"/>
-  <ellipse cx="148" cy="32" rx="8" ry="5" transform="rotate(-30 148 32)"/>
-  <ellipse cx="190" cy="38" rx="8" ry="5" transform="rotate(10 190 38)"/>
-  <ellipse cx="240" cy="34" rx="8" ry="5" transform="rotate(-15 240 34)"/>
-  <ellipse cx="290" cy="32" rx="8" ry="5" transform="rotate(20 290 32)"/>
-  <ellipse cx="340" cy="24" rx="8" ry="5" transform="rotate(-10 340 24)"/>
-  <ellipse cx="385" cy="30" rx="8" ry="5" transform="rotate(15 385 30)"/>
-  <path d="M130,42 Q124,30 136,28 Q138,38 130,42Z"/>
-  <path d="M168,36 Q164,24 176,23 Q177,33 168,36Z"/>
-  <path d="M215,36 Q212,24 224,24 Q224,34 215,36Z"/>
-  <path d="M265,34 Q263,22 275,22 Q275,32 265,34Z"/>
-  <path d="M315,26 Q313,14 325,14 Q325,24 315,26Z"/>
-  <path d="M364,28 Q362,16 374,16 Q374,26 364,28Z"/>
-  <path d="M404,34 Q402,22 414,22 Q414,32 404,34Z"/>
-  <path d="M446,42 Q468,30 492,40 Q468,52 446,42Z"/>
-  <path d="M446,42 Q436,34 432,30 Q437,42 432,54 Q436,50 446,42Z"/>
-  <circle cx="482" cy="38" r="2.5" fill="#2B5BA8" stroke="none"/>
-</svg>
-
 <script>
-  // ── Refs ──
   const pYes = document.getElementById('p-yes');
   const pNo  = document.getElementById('p-no');
   const secEmail     = document.getElementById('sec-email');
@@ -662,11 +514,10 @@
   const recapContent = document.getElementById('recap-content');
   const errorBanner  = document.getElementById('error-banner');
 
-  // ── Presence toggle ──
   function onPresence() {
     const yes = pYes.checked;
-    secEmail.classList.toggle('on', yes);
-    document.getElementById('email').required = yes;
+    secEmail.classList.toggle('on', true);
+    document.getElementById('email').required = true;
     secPartner.classList.toggle('on', yes);
     secChildren.classList.toggle('on', yes);
     secDiet.classList.toggle('on', yes);
@@ -675,32 +526,27 @@
     secBrunch.classList.toggle('on', yes);
     updateRecap();
   }
-  pYes.addEventListener('change', () => { onPresence(); });
-  pNo.addEventListener('change',  () => { onPresence(); });
+  pYes.addEventListener('change', onPresence);
+  pNo.addEventListener('change', onPresence);
 
-  // ── Accompagnant sub-toggle ──
   const aYes = document.getElementById('a-yes');
   const aNo  = document.getElementById('a-no');
   const secPartnerName = document.getElementById('sec-partner-name');
-  aYes.addEventListener('change', () => { secPartnerName.classList.add('on'); updateRecap(); });
-  aNo.addEventListener('change',  () => { secPartnerName.classList.remove('on'); updateRecap(); });
+  aYes.addEventListener('change', () => { secPartnerName.classList.add('on'); document.getElementById('partner-name').required = true; updateRecap(); });
+  aNo.addEventListener('change',  () => { secPartnerName.classList.remove('on'); document.getElementById('partner-name').required = false; updateRecap(); });
 
-  // ── Voiturier sub-toggle ──
   const vYes = document.getElementById('v-yes');
   const vNo  = document.getElementById('v-no');
   const secVoiturierPrix = document.getElementById('sec-voiturier-prix');
   vYes.addEventListener('change', () => { secVoiturierPrix.classList.add('on'); updateRecap(); });
   vNo.addEventListener('change',  () => { secVoiturierPrix.classList.remove('on'); updateRecap(); });
 
-  // ── Children sub-toggle ──
   const cYes = document.getElementById('c-yes');
   const cNo  = document.getElementById('c-no');
   const secCount = document.getElementById('sec-count');
-
   cYes.addEventListener('change', () => { secCount.classList.add('on'); });
   cNo.addEventListener('change',  () => { secCount.classList.remove('on'); count = 0; updateChildFields(); });
 
-  // ── Counter + dynamic child name fields ──
   let count = 0;
   const display = document.getElementById('c-display');
   const hidden  = document.getElementById('c-hidden');
@@ -715,69 +561,48 @@
       div.innerHTML = `
         <div class="child-row-label">Enfant ${i}</div>
         <div class="child-row">
-          <input type="text" name="enfant_${i}_prenom" placeholder="Prénom" />
-          <input type="number" name="enfant_${i}_age" placeholder="Âge" min="0" max="17" />
+          <input type="text" name="enfant_${i}_prenom" placeholder="Prénom" required />
+          <input type="number" name="enfant_${i}_age" placeholder="Âge" min="0" max="17" required />
         </div>`;
       childrenFields.appendChild(div);
     }
     updateRecap();
   }
 
-  document.getElementById('btn-plus').addEventListener('click', () => {
-    count = Math.min(count + 1, 10);
-    updateChildFields();
-  });
-  document.getElementById('btn-minus').addEventListener('click', () => {
-    count = Math.max(count - 1, 0);
-    updateChildFields();
-  });
+  document.getElementById('btn-plus').addEventListener('click', () => { count = Math.min(count + 1, 10); updateChildFields(); });
+  document.getElementById('btn-minus').addEventListener('click', () => { count = Math.max(count - 1, 0); updateChildFields(); });
 
-  // ── Récap dynamique ──
   function updateRecap() {
     if (!pYes.checked && !pNo.checked) { recapBox.classList.remove('on'); return; }
-
     const lines = [];
-
-    if (pYes.checked) lines.push('✅ Présent(e)');
-    else lines.push('❌ Absent(e)');
-
+    if (pYes.checked) lines.push(' Présent.e');
+    else lines.push(' Absent(e)');
     const name = document.getElementById('name').value.trim();
-    if (name) lines.push('👤 ' + name);
-
+    if (name) lines.push(' ' + name);
     if (pYes.checked) {
       if (aYes.checked) {
         const pname = document.getElementById('partner-name').value.trim();
-        lines.push('👫 Accompagné(e)' + (pname ? ' de ' + pname : ''));
-      } else {
-        lines.push('🚶 Seul(e)');
+        lines.push(' Accompagné.e' + (pname ? ' de ' + pname : ''));
+      } else lines.push(' Seul(e)');
+      if (cYes.checked && count > 0) lines.push(` ${count} enfant${count > 1 ? 's' : ''}`);
+      if (document.getElementById('d-veg').checked) lines.push(' Menu végétarien');
+      const heb = document.querySelector('input[name="hebergement"]:checked');
+      if (heb) {
+        if (heb.value.includes('2 nuits')) lines.push('️ 2 nuits');
+        else if (heb.value.includes('1 nuit')) lines.push('️ 1 nuit');
+        else lines.push(' Sans hébergement');
       }
-
-      if (cYes.checked && count > 0) lines.push(`👶 ${count} enfant${count > 1 ? 's' : ''}`);
-
-      if (document.getElementById('d-veg').checked) lines.push('🥗 Menu végétarien');
-
-      const hebergement = document.querySelector('input[name="hebergement"]:checked');
-      if (hebergement) {
-        if (hebergement.value.includes('2 nuits')) lines.push('🛏️ Hébergement 2 nuits');
-        else if (hebergement.value.includes('1 nuit')) lines.push('🛏️ Hébergement 1 nuit');
-        else lines.push('🚗 Sans hébergement sur place');
-      }
-
-      if (vYes.checked) lines.push('🚕 Intéressé(e) par le voiturier');
-
+      if (vYes.checked) lines.push(' Voiturier');
       const brunch = document.querySelector('input[name="brunch"]:checked');
-      if (brunch && brunch.value.includes('Oui')) lines.push('☕ Présent(e) au brunch du dimanche');
+      if (brunch && brunch.value.includes('Oui')) lines.push(' Brunch du dimanche');
     }
-
     recapContent.innerHTML = lines.join('<br/>');
     recapBox.classList.add('on');
   }
 
-  // Mettre à jour le récap à chaque saisie
   document.getElementById('form').addEventListener('input', updateRecap);
   document.getElementById('form').addEventListener('change', updateRecap);
 
-  // ── Validation & Submit ──
   const form    = document.getElementById('form');
   const success = document.getElementById('success');
   const btn     = document.getElementById('submit-btn');
@@ -787,31 +612,24 @@
     errorBanner.classList.add('on');
     errorBanner.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
-
-  function clearError() {
-    errorBanner.classList.remove('on');
-  }
+  function clearError() { errorBanner.classList.remove('on'); }
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     clearError();
-
     const name = document.getElementById('name').value.trim();
     const presence = document.querySelector('input[name="presence"]:checked');
-
-    if (!presence) { showError('⚠️ Merci d\'indiquer si vous serez présent(e) ou non.'); return; }
-    if (!name)     { showError('⚠️ Merci d\'indiquer votre prénom et nom.'); return; }
+    if (!presence) { showError('Merci d\'indiquer si vous serez présent.e ou non.'); return; }
+    if (!name)     { showError('Merci d\'indiquer votre prénom et nom.'); return; }
     if (pYes.checked && !document.getElementById('email').value.trim()) {
-      showError('⚠️ Merci d\'indiquer votre adresse e-mail pour que nous puissions vous recontacter.'); return;
+      showError('Merci d\'indiquer votre adresse e-mail.'); return;
     }
-    if (aYes.checked && !document.getElementById('partner-name').value.trim()) {
-      showError('⚠️ Merci d\'indiquer le prénom et nom de votre accompagnant(e).'); return;
+    if (pYes.checked && aYes.checked && !document.getElementById('partner-name').value.trim()) {
+      showError('Merci d\'indiquer le prénom et nom de votre accompagnant.e.'); return;
     }
-
     btn.disabled = true;
     btn.textContent = 'Envoi en cours…';
 
-    // Construire les données enfants
     let enfantsDetail = '';
     for (let i = 1; i <= count; i++) {
       const prenom = form.querySelector(`[name="enfant_${i}_prenom"]`)?.value || '';
@@ -833,14 +651,19 @@
     };
 
     try {
-      await emailjs.send('service_loao4c2', 'e8sovml', templateParams);
+      await emailjs.send('service_loao4c2', 'template_rqy8azd', templateParams);
       form.style.display = 'none';
+      document.querySelector('.card-header').style.display = 'none';
+      if (pYes.checked) {
+        document.getElementById('success-present').style.display = 'block';
+      } else {
+        document.getElementById('success-absent').style.display = 'block';
+      }
       success.classList.add('on');
     } catch (err) {
       btn.disabled = false;
       btn.textContent = 'Envoyer ma réponse';
-      showError('⚠️ Une erreur s\'est produite. Merci de réessayer ou de nous contacter directement.');
-      console.error('EmailJS error:', err);
+      showError('️ Une erreur s\'est produite. Merci de réessayer ou de nous contacter directement.');
     }
   });
 </script>
