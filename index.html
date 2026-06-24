@@ -14,23 +14,30 @@
       --parchment: #FDFAF5;
       --terracotta: #C4845A;
       --brown: #3D2F22;
-      --brown-soft: #6B5744;
+      --brown-soft: #564434;
       --green-wash: #A8B89A;
       --green-dark: #5A7050;
     }
     body {
-      background: #DDD8CE;
+      background: #ECE5DA;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23p)' opacity='0.04'/%3E%3C/svg%3E");
       min-height: 100vh;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
-      padding: 32px 16px;
+      padding: 24px 0;
       font-family: 'Jost', sans-serif;
     }
+    @media (max-width: 480px) { body { padding: 0; } }
 
-    .scene { width: min(340px, 88vw); aspect-ratio: 2/3; perspective: 1400px; cursor: pointer; }
+    .scene { width: min(480px, 100vw); aspect-ratio: 2/3; perspective: 1400px; cursor: pointer; }
     .card { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.9s cubic-bezier(0.4,0.2,0.2,1); }
     .card.flipped { transform: rotateY(180deg); }
     .face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; overflow: hidden; background: var(--parchment); box-shadow: 0 4px 16px rgba(0,0,0,0.10), 0 24px 60px rgba(0,0,0,0.13); }
+    .face::after {
+      content: '';
+      position: absolute; inset: 0; pointer-events: none; z-index: 10;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    }
     .face-back { transform: rotateY(180deg); }
 
     /* ── RECTO ── */
@@ -104,14 +111,17 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center top;
+      object-position: center 30%;
       display: block;
+      transform: scale(1.18);
+      transform-origin: center 35%;
     }
 
     /* ── VERSO ── */
     .back-inner {
-      display: flex; flex-direction: column; justify-content: space-between;
+      display: flex; flex-direction: column; justify-content: center;
       height: 100%; padding: 34px 28px 26px; text-align: center;
+      gap: 0;
     }
 
     .back-label {
@@ -121,35 +131,33 @@
     }
     .story {
       font-family: 'Libre Baskerville', serif;
-      font-size: clamp(12.5px, 3.5vw, 14px);
+      font-size: clamp(14px, 4vw, 18px);
       font-style: italic; color: var(--brown-soft);
-      opacity: 0.7; line-height: 1.9;
+      opacity: 0.7; line-height: 1.65;
     }
-    .story-sep { width: 24px; height: 1px; background: var(--sage-light); margin: 12px auto; opacity: 0.6; }
+    .story-sep { width: 24px; height: 1px; background: var(--sage-light); margin: 16px auto; opacity: 0.6; }
     .location {
       font-family: 'Dancing Script', cursive;
-      font-size: clamp(18px, 5vw, 22px);
+      font-size: clamp(22px, 6vw, 28px);
       color: var(--terracotta); opacity: 0.85; line-height: 1.4;
+      margin: 16px 0;
+    }
+    .back-ctas {
+      margin-top: 28px;
     }
     .cta {
       display: inline-block; font-size: 7.5px; font-weight: 500;
       letter-spacing: 4px; text-transform: uppercase;
-      color: var(--parchment); background: var(--sage);
+      color: var(--parchment); background: var(--brown);
       padding: 13px 26px; text-decoration: none;
       font-family: 'Jost', sans-serif; border: none; cursor: pointer;
       transition: background 0.2s;
     }
-    .cta:hover { background: var(--brown); }
-    .back-flip {
-      display: block; margin-top: 10px;
-      font-size: 7px; letter-spacing: 3px; text-transform: uppercase;
-      color: var(--brown-soft); opacity: 0.2;
-      background: none; border: none;
-      font-family: 'Jost', sans-serif; cursor: pointer;
-    }
+    .cta:hover { background: var(--terracotta); }
+
     .tzatziki {
       font-family: 'Libre Baskerville', serif; font-style: italic;
-      font-size: 10.5px; color: var(--brown-soft); opacity: 0.2; margin-top: 6px;
+      font-size: 10.5px; color: var(--brown-soft); opacity: 0.55; margin-top: 6px;
     }
     @media (prefers-reduced-motion: reduce) { .card { transition: none; } }
   
@@ -163,6 +171,7 @@ font-style:italic;
 font-size:58px!important;
 font-weight:400!important;
 color:#b67f56!important;
+letter-spacing:0.02em!important;
 }
 
 .names-amp{
@@ -177,6 +186,8 @@ opacity:.8!important;
 .date-txt{
 font-size:10px!important;
 letter-spacing:3px!important;
+color:#6B5744!important;
+opacity:0.85!important;
 }
 
 .loc-txt{
@@ -191,7 +202,7 @@ line-height:1.6!important;
 </head>
 <body>
 
-<div class="scene" onclick="flip()">
+<div class="scene" id="scene">
   <div class="card" id="card">
 
     <!-- RECTO -->
@@ -199,7 +210,7 @@ line-height:1.6!important;
       <div class="front-inner">
 
         <div class="front-top">
-          
+          <span class="stl" style="opacity:0.75;color:var(--brown);font-weight:500">Save the date</span>
           <div class="names">
             Mélina
             <span class="names-amp">&amp;</span>
@@ -208,17 +219,17 @@ line-height:1.6!important;
           <div style="display:flex;flex-direction:column;align-items:center">
             <div class="date-row">
               <div class="date-h"></div>
-              <div class="date-txt">18 · 09 · 2027</div>
+              <div class="date-txt">Samedi 18 septembre 2027</div>
               <div class="date-h"></div>
             </div>
-            <div class="loc-txt">Seine-et-Marne</div>
+            
             
           </div>
         </div>
 
         <!-- Illustration aquarelle domaine vue aérienne -->
         <div class="illus-wrap">
-          <img src="villa-aquarelle.webp" alt="Domaine" />
+          <img src="villa-aquarelle.png" alt="Domaine" />
         </div>
 
       </div>
@@ -228,7 +239,7 @@ line-height:1.6!important;
     <div class="face face-back">
       <div class="back-inner">
         <div>
-          <span class="back-label">Notre histoire</span>
+          <span class="back-label" style="display:none">Notre histoire</span>
           <div class="story">
             Il lui a demandé de l'épouser.<br/>
             Elle a répondu <em>« pour de vrai ? »</em><br/>
@@ -243,10 +254,9 @@ line-height:1.6!important;
           <div class="story-sep"></div>
           <div class="location">Du coup, ça sera en<br/>Seine-et-Marne.*</div>
         </div>
-        <div>
-          <a href="rsvp.html" class="cta" onclick="event.stopPropagation()">Confirmer ma présence</a>
-          <button class="back-flip" onclick="event.stopPropagation();unflip()">← retourner</button>
-          <div class="tzatziki">* promis, il y aura du tzatziki quand même</div>
+        <div class="back-ctas">
+          <a href="rsvp.html" class="cta" onclick="event.stopPropagation()">Répondre à l'invitation</a>
+          <div class="tzatziki" style="margin-top:20px">* promis, il y aura du tzatziki quand même</div>
         </div>
       </div>
     </div>
@@ -256,9 +266,8 @@ line-height:1.6!important;
 
 <script>
   const card = document.getElementById('card');
-  function flip()   { card.classList.add('flipped'); }
-  function unflip() { card.classList.remove('flipped'); }
-  document.getElementById('scene').addEventListener('click', flip);
+  function toggleFlip() { card.classList.toggle('flipped'); }
+  document.getElementById('scene').addEventListener('click', toggleFlip);
 </script>
 </body>
 </html>
