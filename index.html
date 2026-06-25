@@ -95,18 +95,16 @@
       color: var(--brown-soft); opacity: 0.35; margin-top: 4px;
     }
 
-    .tap-hint {
-      font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
-      color: var(--terracotta); opacity: 0.75; margin-top: 14px;
-      animation: pulse 2.5s ease-in-out infinite;
-      display: flex; align-items: center; justify-content: center; gap: 6px;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 0.75; transform: translateY(0); }
-      50% { opacity: 0.45; transform: translateY(3px); }
-    }
+    .tap-hint { display: none; }
 
-    /* Illustration occupe le bas */
+    @keyframes hint-flip {
+      0%   { transform: rotateY(0deg); }
+      30%  { transform: rotateY(10deg); }
+      60%  { transform: rotateY(-3deg); }
+      100% { transform: rotateY(0deg); }
+    }
+    .card.hint { animation: hint-flip 0.8s cubic-bezier(0.4,0.2,0.2,1) forwards; }
+
     .illus-wrap {
       flex: 1;
       width: 100%;
@@ -236,6 +234,7 @@ line-height:1.6!important;
         <!-- Illustration aquarelle domaine vue aérienne -->
         <div class="illus-wrap">
           <img src="villa-aquarelle.png" alt="Domaine" />
+
         </div>
 
       </div>
@@ -272,7 +271,21 @@ line-height:1.6!important;
 
 <script>
   const card = document.getElementById('card');
-  function toggleFlip() { card.classList.toggle('flipped'); }
+
+  // Animation hint au chargement
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      card.classList.add('hint');
+      card.addEventListener('animationend', () => {
+        card.classList.remove('hint');
+      }, { once: true });
+    }, 1000);
+  });
+
+  function toggleFlip() {
+    if (card.classList.contains('hint')) return;
+    card.classList.toggle('flipped');
+  }
   document.getElementById('scene').addEventListener('click', toggleFlip);
 </script>
 </body>
