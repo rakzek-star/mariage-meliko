@@ -109,7 +109,7 @@
       flex: 1;
       width: 100%;
       position: relative;
-      overflow: hidden;
+      padding: 12px 16px 16px;
     }
     .illus-wrap img {
       width: 100%;
@@ -120,6 +120,41 @@
       transform: scale(1.18);
       transform-origin: center 35%;
     }
+
+    /* Flèche "tourner" */
+    .flip-hint {
+      position: absolute;
+      bottom: 24px;
+      right: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      pointer-events: none;
+      z-index: 5;
+      animation: hint-pulse 2s ease-in-out infinite;
+    }
+    .flip-hint-icon {
+      width: 36px; height: 36px;
+      background: rgba(253,250,245,0.88);
+      border: 1px solid rgba(61,47,34,0.15);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      backdrop-filter: blur(4px);
+    }
+    .flip-hint-icon svg { width: 16px; height: 16px; }
+    .flip-hint-label {
+      font-family: 'Jost', sans-serif;
+      font-size: 7px; letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--brown); opacity: 0.5;
+    }
+    @keyframes hint-pulse {
+      0%, 100% { transform: translateY(0); opacity: 0.8; }
+      50% { transform: translateY(-4px); opacity: 1; }
+    }
+    /* Cacher la flèche une fois flipped */
+    .card.flipped .flip-hint { display: none; }
 
     /* ── VERSO ── */
     .back-inner {
@@ -234,7 +269,14 @@ line-height:1.6!important;
         <!-- Illustration aquarelle domaine vue aérienne -->
         <div class="illus-wrap">
           <img src="villa-aquarelle.png" alt="Domaine" />
-
+          <div class="flip-hint">
+            <div class="flip-hint-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#3D2F22" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 18l6-6-6-6"/>
+              </svg>
+            </div>
+            <span class="flip-hint-label">tourner</span>
+          </div>
         </div>
 
       </div>
