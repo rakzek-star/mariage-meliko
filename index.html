@@ -195,12 +195,13 @@
     .cta {
       display: inline-block; font-size: 7.5px; font-weight: 500;
       letter-spacing: 4px; text-transform: uppercase;
-      color: var(--parchment); background: var(--brown);
+      color: var(--brown); background: transparent;
       padding: 13px 26px; text-decoration: none;
-      font-family: 'Jost', sans-serif; border: none; cursor: pointer;
-      transition: background 0.2s;
+      font-family: 'Jost', sans-serif;
+      border: 1px solid rgba(61,47,34,0.2); cursor: pointer;
+      transition: all 0.2s;
     }
-    .cta:hover { background: var(--terracotta); }
+    .cta:hover { border-color: rgba(61,47,34,0.5); background: rgba(61,47,34,0.04); }
 
     .tzatziki {
       font-family: 'Libre Baskerville', serif; font-style: italic;
