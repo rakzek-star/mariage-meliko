@@ -3,651 +3,335 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RSVP — Mélina & Nicolas</title>
-  <meta property="og:title" content="Mélina & Nicolas — 18 Septembre 2027" />
-  <meta property="og:description" content="Confirmez votre présence à notre mariage !" />
-  <meta property="og:image" content="https://mariage-meliko.fr/og-image.png" />
-  <meta property="og:url" content="https://mariage-meliko.fr/rsvp.html" />
+  <title>Save the Date — Mélina & Nicolas</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>" />
   <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Dancing+Script:wght@500;700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
+      --sage: #7A8C6E;
+      --sage-light: #B5C4A8;
       --parchment: #FDFAF5;
       --terracotta: #C4845A;
       --brown: #3D2F22;
       --brown-soft: #564434;
-      --sage: #7A8C6E;
-      --sage-light: #B5C4A8;
+      --green-wash: #A8B89A;
+      --green-dark: #5A7050;
     }
-
     body {
       background: #ECE5DA;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23p)' opacity='0.04'/%3E%3C/svg%3E");
       min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 24px 0;
+      font-family: 'Jost', sans-serif;
+    }
+    @media (max-width: 480px) { body { padding: 0; } }
+
+    .scene { width: min(480px, 100vw); aspect-ratio: 2/3; perspective: 1400px; cursor: pointer; -webkit-perspective: 1400px; }
+    .card { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; -webkit-transform-style: preserve-3d; transition: transform 0.9s cubic-bezier(0.4,0.2,0.2,1); -webkit-transition: -webkit-transform 0.9s cubic-bezier(0.4,0.2,0.2,1); }
+    .card.flipped { transform: rotateY(180deg); -webkit-transform: rotateY(180deg); }
+    .face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; overflow: hidden; background: var(--parchment); box-shadow: 0 4px 16px rgba(0,0,0,0.10), 0 24px 60px rgba(0,0,0,0.13); transform: translateZ(0); -webkit-transform: translateZ(0); }
+    .face::after {
+      content: '';
+      position: absolute; inset: 0; pointer-events: none; z-index: 10;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    }
+    .face-back { transform: rotateY(180deg); -webkit-transform: rotateY(180deg); }
+
+    /* ── RECTO ── */
+    .front-inner {
+      display: flex; flex-direction: column; align-items: center;
+      height: 100%; position: relative;
+    }
+
+    /* Zone texte haut */
+    .front-top {
+      padding: 30px 28px 0;
+      text-align: center;
+      position: relative; z-index: 2;
+      width: 100%;
+    }
+
+    .stl {
+      font-size: 8px; letter-spacing: 7px; text-transform: uppercase;
+      color: var(--brown-soft); opacity: 0.45; font-weight: 300;
+      margin-bottom: 12px; display: block;
+    }
+
+    .names {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(32px, 9.5vw, 44px);
+      font-weight: 500;
+      color: var(--terracotta);
+      line-height: 1.05;
+    }
+
+    .names-amp {
+      display: block;
+      font-family: 'Jost', sans-serif;
+      font-size: clamp(9px, 2.5vw, 11px);
+      font-weight: 300;
+      letter-spacing: 5px;
+      color: var(--brown-soft);
+      opacity: 0.45;
+      margin: 4px 0;
+    }
+
+    .date-row {
+      display: flex; align-items: center; gap: 10px;
+      margin: 12px 0 0;
+      width: 80%;
+    }
+    .date-h { flex: 1; height: 1px; background: var(--terracotta); opacity: 0.2; }
+    .date-txt {
+      font-size: 7.5px; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--brown-soft); opacity: 0.5; white-space: nowrap;
+    }
+
+    .loc-txt {
+      font-size: 7.5px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--brown-soft); opacity: 0.35; margin-top: 4px;
+    }
+
+    .tap-hint { display: none; }
+
+    @keyframes hint-flip {
+      0%   { transform: rotateY(0deg); }
+      30%  { transform: rotateY(10deg); }
+      60%  { transform: rotateY(-3deg); }
+      100% { transform: rotateY(0deg); }
+    }
+    .card.hint { animation: hint-flip 0.8s cubic-bezier(0.4,0.2,0.2,1) forwards; }
+
+    .illus-wrap {
+      flex: 1;
+      width: 100%;
+      position: relative;
+      padding: 12px 16px 16px;
+    }
+    .illus-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+      display: block;
+      transform: scale(1.18);
+      transform-origin: center 35%;
+    }
+
+    /* Flèche "tourner" */
+    .flip-hint {
+      position: absolute;
+      bottom: 24px;
+      right: 24px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 40px 16px;
-      font-family: 'Jost', sans-serif;
+      gap: 6px;
+      pointer-events: none;
+      z-index: 5;
+      animation: hint-pulse 2s ease-in-out infinite;
+    }
+    .flip-hint-icon {
+      width: 48px; height: 48px;
+      background: rgba(253,250,245,0.92);
+      border: 1px solid rgba(61,47,34,0.2);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+    }
+    .flip-hint-icon span {
+      font-size: 22px;
       color: var(--brown);
+      line-height: 1;
     }
-
-    /* ── Card ── */
-    .card {
-      background: var(--parchment);
-      max-width: 500px;
-      width: 100%;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.10), 0 24px 60px rgba(0,0,0,0.13);
-    }
-
-    /* ── Header ── */
-    .card-header {
-      text-align: center;
-      padding: 32px 40px 24px;
-      border-bottom: 1px solid rgba(196,132,90,0.2);
-      position: relative;
-    }
-
-    .back-link {
-      display: block;
-      font-size: 8px; font-weight: 400;
-      letter-spacing: 3px; text-transform: uppercase;
-      color: var(--brown-soft); text-decoration: none;
-      opacity: 0.7; transition: opacity 0.2s;
-      margin-bottom: 4px;
-    }
-    .back-link:hover { opacity: 0.8; }
-
-    .header-label {
-      font-size: 8px; letter-spacing: 6px;
+    .flip-hint-label {
+      font-family: 'Jost', sans-serif;
+      font-size: 8px; letter-spacing: 2px;
       text-transform: uppercase;
-      color: var(--brown); opacity: 0.75;
-      margin-bottom: 8px; display: block;
+      color: var(--brown); opacity: 0.6;
+    }
+    @keyframes hint-pulse {
+      0%, 100% { transform: translateY(0); opacity: 0.8; }
+      50% { transform: translateY(-4px); opacity: 1; }
+    }
+    /* Cacher la flèche une fois flipped */
+    .card.flipped .flip-hint { display: none; }
+
+    /* ── VERSO ── */
+    .back-inner {
+      display: flex; flex-direction: column; justify-content: center;
+      height: 100%; padding: 34px 28px 26px; text-align: center;
+      gap: 0;
     }
 
-    .header-names {
+    .back-label {
+      font-size: 7px; letter-spacing: 5px; text-transform: uppercase;
+      color: var(--sage); opacity: 0.55; font-weight: 300;
+      margin-bottom: 14px; display: block;
+    }
+    .story {
       font-family: 'Libre Baskerville', serif;
-      font-style: italic; font-weight: 400;
-      font-size: clamp(32px, 9vw, 42px);
-      color: var(--terracotta);
-      line-height: .95;
-      letter-spacing: 0.02em;
-    }
-
-    .header-amp {
-      display: block;
       font-size: clamp(14px, 4vw, 18px);
-      opacity: 0.7; margin: 2px 0;
+      font-style: italic; color: var(--brown-soft);
+      opacity: 0.7; line-height: 1.65;
     }
-
-    .header-date {
-      font-size: 8px; letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--brown); opacity: 0.8;
-      margin-top: 10px; display: block;
+    .story-sep { width: 24px; height: 1px; background: var(--sage-light); margin: 16px auto; opacity: 0.6; }
+    .location {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(22px, 6vw, 28px);
+      color: var(--terracotta); opacity: 0.85; line-height: 1.4;
+      margin: 16px 0;
     }
-
-    .deadline-banner {
-      margin-top: 10px;
-      font-family: 'Libre Baskerville', serif;
-      font-style: italic;
-      font-size: 13px;
-      color: var(--brown-soft); opacity: 0.75;
+    .back-ctas {
+      margin-top: 28px;
     }
-
-    /* ── Form body ── */
-    .form-body { padding: 28px 40px 36px; }
-
-    @media (max-width: 480px) {
-      .form-body { padding: 20px 18px 28px; }
-      .card-header { padding: 28px 18px 20px; }
-    }
-
-    /* ── Sections ── */
-    .section { margin-bottom: 36px; }
-
-    .section-label {
-      font-size: 9px; letter-spacing: 4px;
-      text-transform: uppercase; font-weight: 600;
-      color: var(--brown); opacity: 0.85;
-      margin-bottom: 14px; padding-bottom: 8px;
-      border-bottom: 1.5px solid rgba(107,87,68,0.3);
-      display: block;
-    }
-
-    .field { margin-bottom: 20px; }
-
-    label.field-label {
-      display: block;
-      font-family: 'Libre Baskerville', serif;
-      font-style: italic; font-size: 16px;
-      color: var(--brown-soft); margin-bottom: 7px;
-    }
-
-    label.field-label .req { opacity: 0.4; font-size: 13px; }
-
-    input[type="text"],
-    input[type="email"],
-    input[type="number"],
-    textarea {
-      width: 100%;
-      padding: 10px 13px;
-      border: 1px solid rgba(107,87,68,0.12);
-      background: rgba(255,255,255,0.6);
-      font-family: 'Jost', sans-serif;
-      font-size: 13px; font-weight: 300;
-      color: var(--brown);
-      outline: none; border-radius: 0;
-      transition: border-color 0.2s;
-    }
-    input:focus, textarea:focus {
-      border-color: var(--terracotta);
-      background: white;
-    }
-    textarea { resize: vertical; min-height: 90px; }
-
-    /* ── Presence cards ── */
-    .presence-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
-    }
-    .pcard input { display: none; }
-    .pcard label {
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 8px; padding: 24px 12px;
-      border: 1px solid rgba(107,87,68,0.12);
-      background: rgba(255,255,255,0.5);
-      cursor: pointer; transition: all 0.2s;
-      min-height: 110px;
-    }
-    .pcard input:checked + label {
-      border-color: var(--terracotta);
-      background: var(--terracotta);
-      color: var(--parchment);
-    }
-    .pcard-icon { font-size: 26px; }
-    .pcard-title {
-      font-size: 8px; font-weight: 500;
-      letter-spacing: 3px; text-transform: uppercase;
-    }
-    .pcard-sub {
-      font-family: 'Libre Baskerville', serif;
-      font-style: italic; font-size: 14px; opacity: 0.7;
-    }
-
-    /* ── Conditional ── */
-    .conditional { display: none; }
-    .conditional.on { display: block; animation: fadeIn 0.3s ease; }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-5px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ── Radio opts ── */
-    .radio-opts { display: flex; flex-direction: column; gap: 10px; }
-    .radio-opt {
-      display: flex; align-items: center; gap: 10px;
-      font-size: 13px; font-weight: 300; cursor: pointer;
-      color: var(--brown-soft);
-    }
-    .radio-opt input[type="radio"] {
-      appearance: none; width: 16px; height: 16px;
-      border: 1px solid rgba(107,87,68,0.3);
-      border-radius: 50%; background: white;
-      cursor: pointer; flex-shrink: 0;
-      transition: all 0.2s;
-    }
-    .radio-opt input:checked {
-      border-color: var(--terracotta);
-      background: var(--terracotta);
-    }
-
-    /* ── Diet chips ── */
-    .diet-chips { display: flex; flex-wrap: wrap; gap: 8px; }
-    .chip input { display: none; }
-    .chip label {
-      display: inline-block; padding: 7px 16px;
-      border: 1px solid rgba(107,87,68,0.12);
-      background: rgba(255,255,255,0.5);
-      font-size: 12px; font-weight: 300; cursor: pointer;
-      transition: all 0.2s; color: var(--brown-soft);
-    }
-    .chip input:checked + label {
-      background: var(--sage); border-color: var(--sage);
-      color: var(--parchment);
-    }
-
-    /* ── Counter ── */
-    .counter { display: flex; align-items: center; gap: 16px; }
-    .counter-btn {
-      width: 34px; height: 34px;
-      border: 1px solid rgba(107,87,68,0.25);
-      background: rgba(255,255,255,0.5);
-      font-size: 18px; color: var(--brown-soft);
-      cursor: pointer; transition: all 0.2s;
-      font-family: 'Jost', sans-serif;
-    }
-    .counter-btn:hover { background: var(--terracotta); color: white; border-color: var(--terracotta); }
-    .counter-val {
-      font-family: 'Libre Baskerville', serif;
-      font-style: italic; font-size: 26px;
-      color: var(--brown); min-width: 20px; text-align: center;
-    }
-
-    /* ── Child rows ── */
-    .children-fields { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
-    .child-row { display: grid; grid-template-columns: 1fr 70px; gap: 8px; }
-    .child-row-label {
-      font-family: 'Libre Baskerville', serif;
-      font-style: italic; font-size: 13px;
-      color: var(--brown-soft); opacity: 0.5; margin-bottom: 4px;
-    }
-
-    /* ── Recap ── */
-    .recap-box {
-      display: none;
-      background: rgba(122,140,110,0.07);
-      border: 1px solid rgba(122,140,110,0.2);
-      padding: 16px 20px; margin-bottom: 20px;
-    }
-    .recap-box.on { display: block; }
-    .recap-title {
-      font-size: 7px; letter-spacing: 4px;
-      text-transform: uppercase; color: var(--sage);
-      opacity: 0.6; margin-bottom: 10px;
-    }
-    .recap-line {
-      font-family: 'Libre Baskerville', serif;
-      font-style: italic; font-size: 14px;
-      color: var(--brown-soft); line-height: 1.7;
-    }
-
-    /* ── Error ── */
-    .error-banner {
-      display: none;
-      background: #fff5f0;
-      border: 1px solid rgba(196,132,90,0.3);
-      padding: 12px 16px; margin-bottom: 14px;
-      font-family: 'Libre Baskerville', serif;
-      font-style: italic; font-size: 14px;
-      color: var(--terracotta); animation: fadeIn 0.3s ease;
-    }
-    .error-banner.on { display: block; }
-
-    /* ── Submit ── */
-    .submit-wrap { text-align: center; margin-top: 8px; }
-    .submit-btn {
-      font-size: 8px; font-weight: 500;
-      letter-spacing: 5px; text-transform: uppercase;
+    .cta {
+      display: inline-block; font-size: 7.5px; font-weight: 500;
+      letter-spacing: 4px; text-transform: uppercase;
       color: var(--parchment); background: var(--brown);
-      border: none; padding: 14px 40px;
-      cursor: pointer; font-family: 'Jost', sans-serif;
-      transition: background 0.2s; width: auto; min-width: 60%;
+      padding: 13px 26px; text-decoration: none;
+      font-family: 'Jost', sans-serif; border: none; cursor: pointer;
+      transition: background 0.2s;
     }
-    .submit-btn:hover { background: var(--terracotta); }
-    .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .cta:hover { background: var(--terracotta); }
 
-    /* ── Success ── */
-    .success { display: none; text-align: center; padding: 56px 40px; }
-    .success-sent { font-size: 8px; letter-spacing: 5px; text-transform: uppercase; color: var(--sage); opacity: 0.7; margin-bottom: 16px; }
-    .success.on { display: block; animation: fadeIn 0.5s ease; }
-    .success-icon { font-size: 42px; margin-bottom: 18px; }
-    .success h2 {
-      font-family: 'Libre Baskerville', serif;
-      font-style: italic; font-size: 34px;
-      color: var(--terracotta); margin-bottom: 10px;
+    .tzatziki {
+      font-family: 'Libre Baskerville', serif; font-style: italic;
+      font-size: 10.5px; color: var(--brown-soft); opacity: 0.55; margin-top: 6px;
     }
-    .success p {
-      font-size: 13px; font-weight: 300;
-      color: var(--brown-soft); opacity: 0.7; line-height: 1.7;
-    }
+    @media (prefers-reduced-motion: reduce) { .card { transition: none; } }
+  
+.names{
+display:flex!important;
+flex-direction:column;
+align-items:center;
+line-height:.92!important;
+font-family:'Libre Baskerville',serif!important;
+font-style:italic;
+font-size:58px!important;
+font-weight:400!important;
+color:#b67f56!important;
+letter-spacing:0.02em!important;
+}
 
-    /* ── Note vég ── */
-    .note-veg {
-      font-family: 'Libre Baskerville', serif;
-      font-style: italic; font-size: 13px;
-      color: var(--brown-soft); opacity: 0.5;
-      margin-bottom: 10px; line-height: 1.5;
-    }
-  </style>
+.names-amp{
+font-family:'Libre Baskerville',serif!important;
+font-style:italic;
+font-size:18px!important;
+letter-spacing:0!important;
+color:#b67f56!important;
+opacity:.8!important;
+}
+
+.date-txt{
+font-size:10px!important;
+letter-spacing:3px!important;
+color:#6B5744!important;
+opacity:0.85!important;
+}
+
+.loc-txt{
+margin-top:14px!important;
+font-size:11px!important;
+letter-spacing:2px!important;
+line-height:1.6!important;
+}
+
+
+</style>
 </head>
 <body>
 
-<div class="card">
-  <div class="card-header">
-    <a href="index.html" class="back-link">← Save the date</a>
-    <div style="height:18px"></div>
-    <span class="header-label">Confirmation de présence</span>
-    <div class="header-names">
-      Mélina
-      <span class="header-amp">&amp;</span>
-      Nicolas
-    </div>
-    <span class="header-date">18 · Septembre · 2027</span>
-    <div class="deadline-banner">Merci de répondre avant le 1er janvier 2027</div>
-  </div>
+<div class="scene" id="scene">
+  <div class="card" id="card">
 
-  <form class="form-body" id="form">
+    <!-- RECTO -->
+    <div class="face face-front">
+      <div class="front-inner">
 
-    <!-- I. Présence -->
-    <div class="section">
-      <span class="section-label">I. Votre présence</span>
-      <div class="presence-grid">
-        <div class="pcard">
-          <input type="radio" id="p-yes" name="presence" value="Oui, je serai présent.e" required />
-          <label for="p-yes">
-            <span class="pcard-icon"></span>
-            <span class="pcard-title">Avec joie</span>
-            <span class="pcard-sub">Je serai là !</span>
-          </label>
+        <div class="front-top">
+          <span class="stl" style="opacity:0.75;color:var(--brown);font-weight:500">Save the date</span>
+          <div class="names">
+            Mélina
+            <span class="names-amp">&amp;</span>
+            Nicolas
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center">
+            <div class="date-row">
+              <div class="date-h"></div>
+              <div class="date-txt">Samedi 18 septembre 2027</div>
+              <div class="date-h"></div>
+            </div>
+            
+            
+          </div>
         </div>
-        <div class="pcard">
-          <input type="radio" id="p-no" name="presence" value="Non, je serai absent.e" />
-          <label for="p-no">
-            <span class="pcard-icon"></span>
-            <span class="pcard-title">Avec regret</span>
-            <span class="pcard-sub">Je ne pourrai pas…</span>
-          </label>
+
+        <!-- Illustration aquarelle domaine vue aérienne -->
+        <div class="illus-wrap">
+          <img src="villa-aquarelle.png" alt="Domaine" />
+          <div class="flip-hint">
+            <div class="flip-hint-icon">
+              <span>↻</span>
+            </div>
+            <span class="flip-hint-label">retourner</span>
+          </div>
         </div>
+
       </div>
     </div>
 
-    <!-- II. Identité -->
-    <div class="section">
-      <span class="section-label">II. Vos informations</span>
-      <div class="field">
-        <label class="field-label" for="name">Prénom et nom <span class="req">*</span></label>
-        <input type="text" id="name" name="name" placeholder="Marie Dupont" required />
-      </div>
-      <div class="field conditional" id="sec-email">
-        <label class="field-label" for="email">Adresse e-mail <span class="req">*</span></label>
-        <input type="email" id="email" name="email" placeholder="marie@exemple.fr" />
-      </div>
-    </div>
-
-    <!-- III. Accompagnant -->
-    <div class="section conditional" id="sec-partner">
-      <span class="section-label">III. Accompagnant.e</span>
-      <div class="field">
-        <label class="field-label">Venez-vous accompagné.e ?</label>
-        <div class="radio-opts">
-          <label class="radio-opt"><input type="radio" name="accompagne" value="Non" id="a-no" checked /> Non, je viens seul.e</label>
-          <label class="radio-opt"><input type="radio" name="accompagne" value="Oui" id="a-yes" /> Oui, je viens avec quelqu'un</label>
+    <!-- VERSO -->
+    <div class="face face-back">
+      <div class="back-inner">
+        <div>
+          <span class="back-label" style="display:none">Notre histoire</span>
+          <div class="story">
+            Il lui a demandé de l'épouser.<br/>
+            Elle a répondu <em>« pour de vrai ? »</em><br/>
+            Il a redemandé. Elle a dit oui.
+          </div>
+          <div class="story-sep"></div>
+          <div class="story">
+            Il a demandé s'ils pouvaient<br/>
+            se marier en Grèce.<br/>
+            Elle a dit non.
+          </div>
+          <div class="story-sep"></div>
+          <div class="location">Du coup, ça sera en<br/>Seine-et-Marne.*</div>
         </div>
-      </div>
-      <div class="field conditional" id="sec-partner-name">
-        <label class="field-label" for="partner-name">Prénom et nom de votre accompagnant.e <span class="req">*</span></label>
-        <input type="text" id="partner-name" name="accompagnant" placeholder="Marie Dupont" />
-      </div>
-    </div>
-
-    <!-- IV. Enfants -->
-    <div class="section conditional" id="sec-children">
-      <span class="section-label">IV. Enfants</span>
-      <div class="field">
-        <label class="field-label">Vous venez avec des enfants ?</label>
-        <div class="radio-opts">
-          <label class="radio-opt"><input type="radio" name="children_yn" value="Non" id="c-no" checked /> Non, sans enfants</label>
-          <label class="radio-opt"><input type="radio" name="children_yn" value="Oui" id="c-yes" /> Oui, avec des enfants</label>
-        </div>
-      </div>
-      <div class="field conditional" id="sec-count">
-        <label class="field-label">Nombre d'enfants</label>
-        <div class="counter">
-          <button type="button" class="counter-btn" id="btn-minus">−</button>
-          <div class="counter-val" id="c-display">0</div>
-          <button type="button" class="counter-btn" id="btn-plus">+</button>
-        </div>
-        <input type="hidden" name="nombre_enfants" id="c-hidden" value="0" />
-        <div class="children-fields" id="children-fields"></div>
-      </div>
-    </div>
-
-    <!-- V. Régime -->
-    <div class="section conditional" id="sec-diet">
-      <span class="section-label">V. Régime alimentaire</span>
-      <div class="field">
-        <label class="field-label">Contraintes alimentaires</label>
-        <p class="note-veg">Le menu proposé inclut une option végétarienne </p>
-        <div class="diet-chips">
-          <div class="chip"><input type="checkbox" id="d-veg" name="regime" value="Végétarien"/><label for="d-veg"> Végétarien</label></div>
-        </div>
-      </div>
-      <div class="field">
-        <label class="field-label" for="allergies">Allergies ou précisions</label>
-        <input type="text" id="allergies" name="allergies" placeholder="fruits à coque, crustacés…" />
-      </div>
-    </div>
-
-    <!-- VI. Hébergement -->
-    <div class="section conditional" id="sec-sleep">
-      <span class="section-label">VI. Hébergement sur place</span>
-      <div class="field">
-        <label class="field-label">Souhaitez-vous dormir sur place ?</label>
-        <p class="note-veg">Les places sont limitées — nous ferons de notre mieux !<br/>Participation : <strong>50 € par personne par nuit</strong>.</p>
-        <div class="radio-opts">
-          <label class="radio-opt"><input type="radio" name="hebergement" value="2 nuits (vendredi et samedi)" id="s-2n" /> Oui, 2 nuits — vendredi 17 et samedi 18 septembre</label>
-          <label class="radio-opt"><input type="radio" name="hebergement" value="1 nuit (samedi seulement)" id="s-1n" /> Oui, 1 nuit — samedi 18 septembre seulement</label>
-          <label class="radio-opt"><input type="radio" name="hebergement" value="Non" id="s-no" /> Non, je m'arrange par mes propres moyens</label>
-        </div>
-      </div>
-    </div>
-      <div class="field conditional" id="sec-voiturier-prix">
-        <label class="field-label" for="voiturier-prix">Combien seriez-vous prêt.e à régler ?</label>
-        <input type="text" id="voiturier-prix" name="voiturier_prix" placeholder="ex : 20 €" />
-      </div>
-    </div>
-
-    <!-- VII. Brunch -->
-    <div class="section conditional" id="sec-brunch">
-      <span class="section-label">VII. Brunch du lendemain</span>
-      <div class="field">
-        <label class="field-label">Nous organisons un brunch le dimanche 19 septembre <br/>Serez-vous des nôtres ?</label>
-        <div class="radio-opts">
-          <label class="radio-opt"><input type="radio" name="brunch" value="Oui, je serai au brunch" id="b-yes" /> Oui, avec plaisir !</label>
-          <label class="radio-opt"><input type="radio" name="brunch" value="Non" id="b-no" checked /> Non, je ne pourrai pas rester</label>
+        <div class="back-ctas">
+          <a href="rsvp.html" class="cta" onclick="event.stopPropagation()">Répondre à l'invitation</a>
+          <div class="tzatziki" style="margin-top:20px">* promis, il y aura du tzatziki quand même</div>
         </div>
       </div>
     </div>
 
-    <!-- VIII. Message -->
-    <div class="section">
-      <span class="section-label">VIII. Un mot pour les mariés</span>
-      <div class="field">
-        <label class="field-label" for="msg">Message / suggestions pour les futurs mariés</label>
-        <textarea id="msg" name="message" placeholder="Félicitations ! Nous avons hâte de célébrer avec vous…"></textarea>
-      </div>
-    </div>
-
-    <!-- Récap -->
-    <div class="recap-box" id="recap-box">
-      <div class="recap-title">Récapitulatif</div>
-      <div class="recap-line" id="recap-content"></div>
-    </div>
-
-    <!-- Erreur -->
-    <div class="error-banner" id="error-banner"></div>
-
-    <div class="submit-wrap">
-      <button type="submit" class="submit-btn" id="submit-btn">Envoyer ma réponse</button>
-    </div>
-  </form>
-
-  <div class="success" id="success">
-    <div id="success-present" style="display:none">
-      <p class="success-sent">Réponse envoyée</p>
-      <h2>Merci à vous !</h2>
-      <p>On a hâte de vous voir en <span style="text-decoration:line-through;opacity:0.45">Grèce</span> Seine-et-Marne.<br/>La suite arrive bientôt.</p>
-    </div>
-    <div id="success-absent" style="display:none">
-      <p class="success-sent">Réponse envoyée</p>
-      <h2>Tristesse !</h2>
-      <p>En espérant te voir bientôt</p>
-    </div>
   </div>
 </div>
 
 <script>
-  const pYes = document.getElementById('p-yes');
-  const pNo  = document.getElementById('p-no');
-  const secEmail     = document.getElementById('sec-email');
-  const secPartner   = document.getElementById('sec-partner');
-  const secChildren  = document.getElementById('sec-children');
-  const secDiet      = document.getElementById('sec-diet');
-  const secSleep     = document.getElementById('sec-sleep');
-  const secBrunch    = document.getElementById('sec-brunch');
-  const recapBox     = document.getElementById('recap-box');
-  const recapContent = document.getElementById('recap-content');
-  const errorBanner  = document.getElementById('error-banner');
+  const card = document.getElementById('card');
 
-  function onPresence() {
-    const yes = pYes.checked;
-    secEmail.classList.toggle('on', true);
-    document.getElementById('email').required = true;
-    secPartner.classList.toggle('on', yes);
-    secChildren.classList.toggle('on', yes);
-    secDiet.classList.toggle('on', yes);
-    secSleep.classList.toggle('on', yes);
-    secBrunch.classList.toggle('on', yes);
-    updateRecap();
-  }
-  pYes.addEventListener('change', onPresence);
-  pNo.addEventListener('change', onPresence);
-
-  const aYes = document.getElementById('a-yes');
-  const aNo  = document.getElementById('a-no');
-  const secPartnerName = document.getElementById('sec-partner-name');
-  aYes.addEventListener('change', () => { secPartnerName.classList.add('on'); document.getElementById('partner-name').required = true; updateRecap(); });
-  aNo.addEventListener('change',  () => { secPartnerName.classList.remove('on'); document.getElementById('partner-name').required = false; updateRecap(); });
-
-const cYes = document.getElementById('c-yes');
-  const cNo  = document.getElementById('c-no');
-  const secCount = document.getElementById('sec-count');
-  cYes.addEventListener('change', () => { secCount.classList.add('on'); });
-  cNo.addEventListener('change',  () => { secCount.classList.remove('on'); count = 0; updateChildFields(); });
-
-  let count = 0;
-  const display = document.getElementById('c-display');
-  const hidden  = document.getElementById('c-hidden');
-  const childrenFields = document.getElementById('children-fields');
-
-  function updateChildFields() {
-    display.textContent = count;
-    hidden.value = count;
-    childrenFields.innerHTML = '';
-    for (let i = 1; i <= count; i++) {
-      const div = document.createElement('div');
-      div.innerHTML = `
-        <div class="child-row-label">Enfant ${i}</div>
-        <div class="child-row">
-          <input type="text" name="enfant_${i}_prenom" placeholder="Prénom" required />
-          <input type="number" name="enfant_${i}_age" placeholder="Âge" min="0" max="17" required />
-        </div>`;
-      childrenFields.appendChild(div);
-    }
-    updateRecap();
-  }
-
-  document.getElementById('btn-plus').addEventListener('click', () => { count = Math.min(count + 1, 10); updateChildFields(); });
-  document.getElementById('btn-minus').addEventListener('click', () => { count = Math.max(count - 1, 0); updateChildFields(); });
-
-  function updateRecap() {
-    if (!pYes.checked && !pNo.checked) { recapBox.classList.remove('on'); return; }
-    const lines = [];
-    if (pYes.checked) lines.push(' Présent.e');
-    else lines.push(' Absent(e)');
-    const name = document.getElementById('name').value.trim();
-    if (name) lines.push(' ' + name);
-    if (pYes.checked) {
-      if (aYes.checked) {
-        const pname = document.getElementById('partner-name').value.trim();
-        lines.push(' Accompagné.e' + (pname ? ' de ' + pname : ''));
-      } else lines.push(' Seul(e)');
-      if (cYes.checked && count > 0) lines.push(` ${count} enfant${count > 1 ? 's' : ''}`);
-      if (document.getElementById('d-veg').checked) lines.push(' Menu végétarien');
-      const heb = document.querySelector('input[name="hebergement"]:checked');
-      if (heb) {
-        if (heb.value.includes('2 nuits')) lines.push('️ 2 nuits');
-        else if (heb.value.includes('1 nuit')) lines.push('️ 1 nuit');
-        else lines.push(' Sans hébergement');
-      }
-      if (vYes.checked) lines.push(' Voiturier');
-      const brunch = document.querySelector('input[name="brunch"]:checked');
-      if (brunch && brunch.value.includes('Oui')) lines.push(' Brunch du dimanche');
-    }
-    recapContent.innerHTML = lines.join('<br/>');
-    recapBox.classList.add('on');
-  }
-
-  document.getElementById('form').addEventListener('input', updateRecap);
-  document.getElementById('form').addEventListener('change', updateRecap);
-
-  const form    = document.getElementById('form');
-  const success = document.getElementById('success');
-  const btn     = document.getElementById('submit-btn');
-
-  function showError(msg) {
-    errorBanner.textContent = msg;
-    errorBanner.classList.add('on');
-    errorBanner.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }
-  function clearError() { errorBanner.classList.remove('on'); }
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    clearError();
-    const name = document.getElementById('name').value.trim();
-    const presence = document.querySelector('input[name="presence"]:checked');
-    if (!presence) { showError('Merci d\'indiquer si vous serez présent.e ou non.'); return; }
-    if (!name)     { showError('Merci d\'indiquer votre prénom et nom.'); return; }
-    if (pYes.checked && !document.getElementById('email').value.trim()) {
-      showError('Merci d\'indiquer votre adresse e-mail.'); return;
-    }
-    if (pYes.checked && aYes.checked && !document.getElementById('partner-name').value.trim()) {
-      showError('Merci d\'indiquer le prénom et nom de votre accompagnant.e.'); return;
-    }
-    btn.disabled = true;
-    btn.textContent = 'Envoi en cours…';
-
-    let enfantsDetail = '';
-    for (let i = 1; i <= count; i++) {
-      const prenom = form.querySelector(`[name="enfant_${i}_prenom"]`)?.value || '';
-      const age    = form.querySelector(`[name="enfant_${i}_age"]`)?.value || '';
-      if (prenom) enfantsDetail += `Enfant ${i} : ${prenom}, ${age} ans\n`;
-    }
-
-    const templateParams = {
-      nom:            name,
-      email:          document.getElementById('email')?.value || '',
-      presence:       presence.value,
-      accompagnant:   aYes.checked ? (document.getElementById('partner-name')?.value || '') : 'Non',
-      nombre_enfants: count > 0 ? `${count}\n${enfantsDetail}` : '0',
-      regime:         document.getElementById('d-veg')?.checked ? 'Végétarien' : 'Aucun',
-      hebergement:    document.querySelector('input[name="hebergement"]:checked')?.value || 'Non précisé',
-      brunch:         document.querySelector('input[name="brunch"]:checked')?.value || 'Non précisé',
-      message:        document.getElementById('msg')?.value || '',
-    };
-
-    try {
-      await emailjs.send('service_loao4c2', 'template_rqy8azd', templateParams);
-      form.style.display = 'none';
-      document.querySelector('.card-header').style.display = 'none';
-      if (pYes.checked) {
-        document.getElementById('success-present').style.display = 'block';
-      } else {
-        document.getElementById('success-absent').style.display = 'block';
-      }
-      success.classList.add('on');
-    } catch (err) {
-      btn.disabled = false;
-      btn.textContent = 'Envoyer ma réponse';
-      showError('️ Une erreur s\'est produite. Merci de réessayer ou de nous contacter directement.');
-    }
+  // Animation hint au chargement
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      card.classList.add('hint');
+      card.addEventListener('animationend', () => {
+        card.classList.remove('hint');
+      }, { once: true });
+    }, 1000);
   });
+
+  function toggleFlip() {
+    if (card.classList.contains('hint')) return;
+    card.classList.toggle('flipped');
+  }
+  document.getElementById('scene').addEventListener('click', toggleFlip);
 </script>
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<script>emailjs.init('CuHNLFrHeBounawJx');</script>
 </body>
 </html>
