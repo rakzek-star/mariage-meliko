@@ -458,6 +458,11 @@
       </div>
     </div>
 
+    <!-- Honeypot anti-spam (caché) -->
+    <div style="display:none" aria-hidden="true">
+      <input type="text" name="website" id="honeypot" tabindex="-1" autocomplete="off" />
+    </div>
+
     <!-- Récap -->
     <div class="recap-box" id="recap-box">
       <div class="recap-title">Récapitulatif</div>
@@ -475,12 +480,12 @@
   <div class="success" id="success">
     <div id="success-present" style="display:none">
       <p class="success-sent">Réponse envoyée</p>
-      <h2>Merci à vous !</h2>
+      <h2>Merci <span id="success-firstname"></span></h2>
       <p>On a hâte de vous voir en <span style="text-decoration:line-through;opacity:0.45">Grèce</span> Seine-et-Marne.<br/>La suite arrive bientôt.</p>
     </div>
     <div id="success-absent" style="display:none">
       <p class="success-sent">Réponse envoyée</p>
-      <h2>Tristesse !</h2>
+      <h2>Tristesse <span id="success-firstname-absent"></span></h2>
       <p>En espérant te voir bientôt</p>
     </div>
   </div>
@@ -595,11 +600,16 @@ const cYes = document.getElementById('c-yes');
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     clearError();
+
+    // Anti-spam honeypot
+    if (document.getElementById('honeypot').value) return;
+
     const name = document.getElementById('name').value.trim();
+    const firstName = name.split(' ')[0];
     const presence = document.querySelector('input[name="presence"]:checked');
     if (!presence) { showError('Merci d\'indiquer si vous serez présent.e ou non.'); return; }
     if (!name)     { showError('Merci d\'indiquer votre prénom et nom.'); return; }
-    if (pYes.checked && !document.getElementById('email').value.trim()) {
+    if (!document.getElementById('email').value.trim()) {
       showError('Merci d\'indiquer votre adresse e-mail.'); return;
     }
     if (pYes.checked && aYes.checked && !document.getElementById('partner-name').value.trim()) {
@@ -629,20 +639,55 @@ const cYes = document.getElementById('c-yes');
 
     try {
       await emailjs.send('service_loao4c2', 'template_rqy8azd', templateParams);
+      // Effacer la sauvegarde locale après envoi réussi
+      try { localStorage.removeItem('rsvp_draft'); } catch(e) {}
       form.style.display = 'none';
       document.querySelector('.card-header').style.display = 'none';
       if (pYes.checked) {
         document.getElementById('success-present').style.display = 'block';
+        document.getElementById('success-firstname').textContent = firstName + ' !';
       } else {
         document.getElementById('success-absent').style.display = 'block';
+        document.getElementById('success-firstname-absent').textContent = firstName + ' !';
       }
       success.classList.add('on');
     } catch (err) {
       btn.disabled = false;
       btn.textContent = 'Envoyer ma réponse';
-      showError('️ Une erreur s\'est produite. Merci de réessayer ou de nous contacter directement.');
+      showError('Une erreur s\'est produite. Merci de réessayer ou de nous contacter directement.');
     }
   });
+
+  // ── localStorage : sauvegarde partielle ──
+  const DRAFT_KEY = 'rsvp_draft';
+  const savedFields = ['name', 'email', 'partner-name', 'allergies', 'msg'];
+
+  function saveDraft() {
+    try {
+      const draft = {};
+      savedFields.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) draft[id] = el.value;
+      });
+      localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+    } catch(e) {}
+  }
+
+  function loadDraft() {
+    try {
+      const raw = localStorage.getItem(DRAFT_KEY);
+      if (!raw) return;
+      const draft = JSON.parse(raw);
+      savedFields.forEach(id => {
+        const el = document.getElementById(id);
+        if (el && draft[id]) el.value = draft[id];
+      });
+      updateRecap();
+    } catch(e) {}
+  }
+
+  form.addEventListener('input', saveDraft);
+  loadDraft();
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>emailjs.init('CuHNLFrHeBounawJx');</script>
