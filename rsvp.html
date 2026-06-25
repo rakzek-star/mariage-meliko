@@ -435,25 +435,11 @@
       </div>
     </div>
 
-    <!-- VII. Voiturier -->
-    <div class="section conditional" id="sec-voiturier">
-      <span class="section-label">VII. Service de voiturier</span>
-      <div class="field">
-        <label class="field-label">Seriez-vous intéressé.e par un service de voiturier pour rentrer ?</label>
-        <div class="radio-opts">
-          <label class="radio-opt"><input type="radio" name="voiturier" value="Non" id="v-no" checked /> Non merci</label>
-          <label class="radio-opt"><input type="radio" name="voiturier" value="Oui" id="v-yes" /> Oui, je suis intéressé.e</label>
-        </div>
-      </div>
-      <div class="field conditional" id="sec-voiturier-prix">
-        <label class="field-label" for="voiturier-prix">Combien seriez-vous prêt.e à régler ?</label>
-        <input type="text" id="voiturier-prix" name="voiturier_prix" placeholder="ex : 20 €" />
-      </div>
-    </div>
+    <!-- VII. Brunch    </div>
 
-    <!-- VIII. Brunch -->
+    <!-- VII. Brunch -->
     <div class="section conditional" id="sec-brunch">
-      <span class="section-label">VIII. Brunch du lendemain</span>
+      <span class="section-label">VII. Brunch du lendemain</span>
       <div class="field">
         <label class="field-label">Nous organisons un brunch le dimanche 19 septembre <br/>Serez-vous des nôtres ?</label>
         <div class="radio-opts">
@@ -463,9 +449,9 @@
       </div>
     </div>
 
-    <!-- IX. Message -->
+    <!-- VIII. Message -->
     <div class="section">
-      <span class="section-label">IX. Un mot pour les mariés</span>
+      <span class="section-label">VIII. Un mot pour les mariés</span>
       <div class="field">
         <label class="field-label" for="msg">Message / suggestions pour les futurs mariés</label>
         <textarea id="msg" name="message" placeholder="Félicitations ! Nous avons hâte de célébrer avec vous…"></textarea>
@@ -508,7 +494,6 @@
   const secChildren  = document.getElementById('sec-children');
   const secDiet      = document.getElementById('sec-diet');
   const secSleep     = document.getElementById('sec-sleep');
-  const secVoiturier = document.getElementById('sec-voiturier');
   const secBrunch    = document.getElementById('sec-brunch');
   const recapBox     = document.getElementById('recap-box');
   const recapContent = document.getElementById('recap-content');
@@ -522,7 +507,6 @@
     secChildren.classList.toggle('on', yes);
     secDiet.classList.toggle('on', yes);
     secSleep.classList.toggle('on', yes);
-    secVoiturier.classList.toggle('on', yes);
     secBrunch.classList.toggle('on', yes);
     updateRecap();
   }
@@ -535,13 +519,7 @@
   aYes.addEventListener('change', () => { secPartnerName.classList.add('on'); document.getElementById('partner-name').required = true; updateRecap(); });
   aNo.addEventListener('change',  () => { secPartnerName.classList.remove('on'); document.getElementById('partner-name').required = false; updateRecap(); });
 
-  const vYes = document.getElementById('v-yes');
-  const vNo  = document.getElementById('v-no');
-  const secVoiturierPrix = document.getElementById('sec-voiturier-prix');
-  vYes.addEventListener('change', () => { secVoiturierPrix.classList.add('on'); updateRecap(); });
-  vNo.addEventListener('change',  () => { secVoiturierPrix.classList.remove('on'); updateRecap(); });
-
-  const cYes = document.getElementById('c-yes');
+const cYes = document.getElementById('c-yes');
   const cNo  = document.getElementById('c-no');
   const secCount = document.getElementById('sec-count');
   cYes.addEventListener('change', () => { secCount.classList.add('on'); });
@@ -645,7 +623,6 @@
       nombre_enfants: count > 0 ? `${count}\n${enfantsDetail}` : '0',
       regime:         document.getElementById('d-veg')?.checked ? 'Végétarien' : 'Aucun',
       hebergement:    document.querySelector('input[name="hebergement"]:checked')?.value || 'Non précisé',
-      voiturier:      vYes.checked ? `Oui — ${document.getElementById('voiturier-prix')?.value || 'montant non précisé'}` : 'Non',
       brunch:         document.querySelector('input[name="brunch"]:checked')?.value || 'Non précisé',
       message:        document.getElementById('msg')?.value || '',
     };
