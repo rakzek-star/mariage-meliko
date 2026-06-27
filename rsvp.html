@@ -419,6 +419,13 @@
         <label class="field-label" for="allergies">Allergies ou précisions</label>
         <input type="text" id="allergies" name="allergies" placeholder="fruits à coque, crustacés…" />
       </div>
+      <div class="field conditional" id="sec-partner-diet">
+        <label class="field-label">Contraintes alimentaires de votre accompagnant.e</label>
+        <div class="diet-chips" style="margin-bottom:10px">
+          <div class="chip"><input type="checkbox" id="d-veg-partner" name="regime_accompagnant" value="Végétarien"/><label for="d-veg-partner">Végétarien</label></div>
+        </div>
+        <input type="text" id="allergies-partner" name="allergies_accompagnant" placeholder="Allergies ou précisions…" />
+      </div>
     </div>
 
     <!-- VI. Hébergement -->
@@ -480,12 +487,12 @@
   <div class="success" id="success">
     <div id="success-present" style="display:none">
       <p class="success-sent">Réponse envoyée</p>
-      <h2>Merci <span id="success-firstname"></span></h2>
+      <h2 id="success-h2-present">Merci !</h2>
       <p>On a hâte de vous voir en <span style="text-decoration:line-through;opacity:0.45">Grèce</span> Seine-et-Marne.<br/>La suite arrive bientôt.</p>
     </div>
     <div id="success-absent" style="display:none">
       <p class="success-sent">Réponse envoyée</p>
-      <h2>Tristesse <span id="success-firstname-absent"></span></h2>
+      <h2 id="success-h2-absent">Tristesse !</h2>
       <p>En espérant te voir bientôt</p>
     </div>
   </div>
@@ -521,8 +528,8 @@
   const aYes = document.getElementById('a-yes');
   const aNo  = document.getElementById('a-no');
   const secPartnerName = document.getElementById('sec-partner-name');
-  aYes.addEventListener('change', () => { secPartnerName.classList.add('on'); document.getElementById('partner-name').required = true; updateRecap(); });
-  aNo.addEventListener('change',  () => { secPartnerName.classList.remove('on'); document.getElementById('partner-name').required = false; updateRecap(); });
+  aYes.addEventListener('change', () => { secPartnerName.classList.add('on'); document.getElementById('partner-name').required = true; document.getElementById('sec-partner-diet').classList.add('on'); updateRecap(); });
+  aNo.addEventListener('change',  () => { secPartnerName.classList.remove('on'); document.getElementById('partner-name').required = false; document.getElementById('sec-partner-diet').classList.remove('on'); updateRecap(); });
 
 const cYes = document.getElementById('c-yes');
   const cNo  = document.getElementById('c-no');
@@ -630,6 +637,8 @@ const cYes = document.getElementById('c-yes');
       email:          document.getElementById('email')?.value || '',
       presence:       presence.value,
       accompagnant:   aYes.checked ? (document.getElementById('partner-name')?.value || '') : 'Non',
+      regime_accompagnant: aYes.checked ? (document.getElementById('d-veg-partner')?.checked ? 'Végétarien' : 'Aucun') : '',
+      allergies_accompagnant: aYes.checked ? (document.getElementById('allergies-partner')?.value || '') : '',
       nombre_enfants: count > 0 ? `${count}\n${enfantsDetail}` : '0',
       regime:         document.getElementById('d-veg')?.checked ? 'Végétarien' : 'Aucun',
       hebergement:    document.querySelector('input[name="hebergement"]:checked')?.value || 'Non précisé',
@@ -645,10 +654,10 @@ const cYes = document.getElementById('c-yes');
       document.querySelector('.card-header').style.display = 'none';
       if (pYes.checked) {
         document.getElementById('success-present').style.display = 'block';
-        document.getElementById('success-firstname').textContent = firstName + ' !';
+        document.getElementById('success-h2-present').textContent = 'Merci ' + firstName + ' !';
       } else {
         document.getElementById('success-absent').style.display = 'block';
-        document.getElementById('success-firstname-absent').textContent = firstName + ' !';
+        document.getElementById('success-h2-absent').textContent = 'Tristesse ' + firstName + ' !';
       }
       success.classList.add('on');
     } catch (err) {
