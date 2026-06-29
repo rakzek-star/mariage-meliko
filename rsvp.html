@@ -564,6 +564,7 @@ const cYes = document.getElementById('c-yes');
 
   function updateRecap() {
     if (!pYes.checked && !pNo.checked) { recapBox.classList.remove('on'); return; }
+    if (pNo.checked) { recapBox.classList.remove('on'); return; }
     const lines = [];
     if (pYes.checked) lines.push(' Présent.e');
     else lines.push(' Absent(e)');
