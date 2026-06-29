@@ -642,6 +642,7 @@ const cYes = document.getElementById('c-yes');
       regime_accompagnant: aYes.checked ? (document.getElementById('d-veg-partner')?.checked ? 'Végétarien' : 'Aucun') : '',
       allergies_accompagnant: aYes.checked ? (document.getElementById('allergies-partner')?.value || '') : '',
       nombre_enfants: count > 0 ? `${count}\n${enfantsDetail}` : '0',
+      allergies:      document.getElementById('allergies')?.value || '',
       regime:         document.getElementById('d-veg')?.checked ? 'Végétarien' : 'Aucun',
       hebergement:    document.querySelector('input[name="hebergement"]:checked')?.value || 'Non précisé',
       brunch:         document.querySelector('input[name="brunch"]:checked')?.value || 'Non précisé',
